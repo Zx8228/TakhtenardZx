@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تخته نرد واقعی</title>
+<title>تخته نرد آنلاین دونفره</title>
+<script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 <style>
 body{background:#1a1a2e;color:white;text-align:center;font-family:Tahoma;margin:0;padding:10px;user-select:none}
-h1{font-size:18px;margin:5px}
-#turn-info{font-size:16px;margin:5px;padding:6px;background:#16213e;border-radius:6px;display:inline-block}
-#board{width:96vw;max-width:600px;height:380px;background:#8B5A2B;border:8px solid #3d2209;border-radius:10px;margin:10px auto;display:flex;direction:ltr;padding:5px;box-sizing:border-box;position:relative}
+#setup-area{background:#16213e;padding:15px;border-radius:10px;margin-bottom:10px}
+#board{width:96vw;max-width:600px;height:350px;background:#8B5A2B;border:8px solid #3d2209;border-radius:10px;margin:10px auto;display:flex;direction:ltr;padding:5px;box-sizing:border-box;position:relative}
 .half{width:47%;display:flex;gap:2px}
 .bar{width:6%;background:#3d2209;margin:0 1%;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
 .column{flex:1;display:flex;flex-direction:column;justify-content:space-between}
@@ -21,51 +21,86 @@ h1{font-size:18px;margin:5px}
 .point.bottom .tri{clip-path:polygon(50% 0,0 100%,100% 100%)}
 .tri.red{background:#c0392b}
 .tri.light{background:#e8d8b0}
-.checker{width:100%;aspect-ratio:1;max-width:26px;border-radius:50%;z-index:2;margin:1px 0;border:2px solid rgba(0,0,0,.4);box-sizing:border-box}
+.checker{width:100%;aspect-ratio:1;max-width:24px;border-radius:50%;z-index:2;margin:1px 0;border:1px solid rgba(0,0,0,.4)}
 .checker.w{background:#f5f5f5}
 .checker.b{background:#111}
-.dice-area{margin:10px}
-.dice{display:inline-block;width:45px;height:45px;background:white;color:black;font-size:24px;line-height:45px;border-radius:8px;margin:3px;font-weight:bold}
-button{padding:10px 20px;font-size:16px;background:#e67e22;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:bold}
-button:disabled{background:#555;cursor:not-allowed}
+.dice{display:inline-block;width:40px;height:40px;background:white;color:black;font-size:20px;line-height:40px;border-radius:8px;margin:3px;font-weight:bold}
+button{padding:8px 15px;background:#e67e22;color:white;border:none;border-radius:5px;cursor:pointer}
+input{padding:8px;border-radius:5px;border:none;width:120px;text-align:center}
 </style>
 </head>
 <body>
 
-<h1>🎲 تخته نرد با قوانین واقعی</h1>
-<div id="turn-info">نوبت: سفید | اول تاس بریزید</div>
+<div id="setup-area">
+    <div id="my-id-display">در حال دریافت کد شما...</div>
+    <hr>
+    <input type="text" id="peer-id-input" placeholder="کد دوستت را بزن">
+    <button onclick="connectToFriend()">وصل شدن به دوست</button>
+</div>
+
+<div id="status">وضعیت: منتظر اتصال...</div>
 <div id="board"></div>
+
 <div class="dice-area">
     <div id="d1" class="dice">؟</div>
     <div id="d2" class="dice">؟</div>
-    <br>
-    <button id="roll-btn" onclick="roll()">پرتاب تاس</button>
+    <button id="roll-btn" onclick="rollDice()">پرتاب تاس</button>
 </div>
 
 <script>
+let peer = new Peer();
+let conn = null;
+let myColor = null; 
 let board = Array(24).fill(null).map(() => ({ color: null, count: 0 }));
-let bar = { w: 0, b: 0 };
 let turn = 'w';
 let diceMoves = [];
 let selectedIndex = null;
 let validMoves = [];
 
-function set(p, c, n) { board[p-1] = { color: c, count: n }; }
-function initBoard() {
-    set(1, 'b', 2); set(6, 'w', 5); set(8, 'w', 3); set(12, 'b', 5);
-    set(13, 'w', 5); set(17, 'b', 3); set(19, 'b', 5); set(24, 'w', 2);
+peer.on('open', id => {
+    document.getElementById('my-id-display').innerText = "کد شما: " + id;
+});
+
+peer.on('connection', c => {
+    conn = c;
+    myColor = 'w'; // کسی که کد رو داده سفیده
+    setupConn();
+    document.getElementById('status').innerText = "وضعیت: دوستت وصل شد! تو سفیدی.";
+});
+
+function connectToFriend() {
+    let friendId = document.getElementById('peer-id-input').value;
+    conn = peer.connect(friendId);
+    myColor = 'b'; // کسی که وصل شده سیاهه
+    setupConn();
+    document.getElementById('status').innerText = "وضعیت: وصل شدی! تو سیاهی.";
 }
-initBoard();
+
+function setupConn() {
+    conn.on('data', data => {
+        if (data.type === 'move') {
+            board = data.board;
+            turn = data.turn;
+            build();
+        } else if (data.type === 'roll') {
+            diceMoves = data.dice;
+            document.getElementById('d1').innerText = diceMoves[0] || '?';
+            document.getElementById('d2').innerText = diceMoves[1] || '?';
+            updateStatus("نوبت حریف حرکت کرد، حالا نوبت توست.");
+        }
+    });
+    build();
+}
+
+// کدهای بازی تخته نرد
+function set(p, c, n) { board[p-1] = { color: c, count: n }; }
+set(1, 'b', 2); set(6, 'w', 5); set(8, 'w', 3); set(12, 'b', 5);
+set(13, 'w', 5); set(17, 'b', 3); set(19, 'b', 5); set(24, 'w', 2);
 
 function build() {
-    let b = document.getElementById('board');
-    b.innerHTML = '';
+    let b = document.getElementById('board'); b.innerHTML = '';
     b.appendChild(makeHalf([13,14,15,16,17,18], [12,11,10,9,8,7]));
-    let barDiv = document.createElement('div');
-    barDiv.className = 'bar';
-    for(let i=0; i<bar.w; i++) { let c = document.createElement('div'); c.className='checker w'; barDiv.appendChild(c); }
-    for(let i=0; i<bar.b; i++) { let c = document.createElement('div'); c.className='checker b'; barDiv.appendChild(c); }
-    b.appendChild(barDiv);
+    let barDiv = document.createElement('div'); barDiv.className = 'bar'; b.appendChild(barDiv);
     b.appendChild(makeHalf([19,20,21,22,23,24], [6,5,4,3,2,1]));
 }
 
@@ -73,8 +108,7 @@ function makeHalf(tops, bots) {
     let h = document.createElement('div'); h.className = 'half';
     for (let i = 0; i < 6; i++) {
         let col = document.createElement('div'); col.className = 'column';
-        col.appendChild(makePoint(tops[i], 'top'));
-        col.appendChild(makePoint(bots[i], 'bottom'));
+        col.appendChild(makePoint(tops[i], 'top')); col.appendChild(makePoint(bots[i], 'bottom'));
         h.appendChild(col);
     }
     return h;
@@ -95,54 +129,47 @@ function makePoint(p, pos) {
     return d;
 }
 
-function roll() {
-    if (diceMoves.length > 0) return;
+function rollDice() {
+    if (turn !== myColor) { alert("نوبت تو نیست!"); return; }
     let d1 = Math.floor(Math.random() * 6) + 1;
     let d2 = Math.floor(Math.random() * 6) + 1;
+    diceMoves = [d1, d2];
     document.getElementById('d1').innerText = d1;
     document.getElementById('d2').innerText = d2;
-    diceMoves = (d1 === d2) ? [d1, d1, d1, d1] : [d1, d2];
-    document.getElementById('roll-btn').disabled = true;
-    updateStatus("مهره انتخاب کنید");
+    if (conn) conn.send({ type: 'roll', dice: diceMoves });
 }
 
 function handleClick(idx) {
-    if (diceMoves.length === 0) return;
+    if (turn !== myColor) return;
     if (selectedIndex === null) {
         if (board[idx].color === turn) { selectedIndex = idx; calculateValidMoves(idx); }
     } else {
-        if (validMoves.includes(idx)) { movePiece(selectedIndex, idx); selectedIndex = null; validMoves = []; }
-        else if (board[idx].color === turn) { selectedIndex = idx; calculateValidMoves(idx); }
-        else { selectedIndex = null; validMoves = []; }
+        if (validMoves.includes(idx)) {
+            executeMove(selectedIndex, idx);
+            selectedIndex = null; validMoves = [];
+            if (conn) conn.send({ type: 'move', board: board, turn: turn });
+        } else { selectedIndex = null; validMoves = []; }
     }
     build();
 }
 
-function calculateValidMoves(fromIdx) {
+function calculateValidMoves(f) {
     validMoves = [];
     let dir = turn === 'w' ? -1 : 1;
     diceMoves.forEach(s => {
-        let t = fromIdx + (s * dir);
-        if (t >= 0 && t < 24) {
-            if (board[t].count <= 1 || board[t].color === turn) validMoves.push(t);
-        }
+        let t = f + (s * dir);
+        if (t >= 0 && t < 24) validMoves.push(t);
     });
 }
 
-function movePiece(f, t) {
-    let dist = Math.abs(t - f);
-    diceMoves.splice(diceMoves.indexOf(dist), 1);
-    if (board[t].count === 1 && board[t].color !== turn) { bar[board[t].color]++; board[t].count = 0; }
+function executeMove(f, t) {
     board[t].color = turn; board[t].count++;
     board[f].count--; if (board[f].count === 0) board[f].color = null;
-    if (diceMoves.length === 0) { turn = turn === 'w' ? 'b' : 'w'; document.getElementById('roll-btn').disabled = false; updateStatus("تاس بریزید"); }
+    diceMoves.shift();
+    if (diceMoves.length === 0) turn = turn === 'w' ? 'b' : 'w';
 }
 
-function updateStatus(msg) {
-    let color = turn === 'w' ? 'سفید' : 'سیاه';
-    document.getElementById('turn-info').innerText = 'نوبت: ' + color + ' | ' + msg;
-}
-
+function updateStatus(msg) { document.getElementById('status').innerText = msg; }
 build();
 </script>
 </body>
