@@ -3,54 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تخته نرد تعاملی</title>
+<title>تخته نرد واقعی</title>
 <style>
 body{background:#1a1a2e;color:white;text-align:center;font-family:Tahoma;margin:0;padding:10px;user-select:none}
+h1{font-size:18px;margin:5px}
+#turn-info{font-size:16px;margin:5px;padding:6px;background:#16213e;border-radius:6px;display:inline-block}
 #board{width:96vw;max-width:600px;height:380px;background:#8B5A2B;border:8px solid #3d2209;border-radius:10px;margin:10px auto;display:flex;direction:ltr;padding:5px;box-sizing:border-box;position:relative}
 .half{width:47%;display:flex;gap:2px}
-.bar{width:6%;background:#3d2209;margin:0 1%;border-radius:3px}
+.bar{width:6%;background:#3d2209;margin:0 1%;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
 .column{flex:1;display:flex;flex-direction:column;justify-content:space-between}
 .point{height:47%;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;cursor:pointer}
 .point.bottom{flex-direction:column-reverse}
-.point.selected{background:rgba(255,255,0,0.3);border-radius:5px}
+.point.selected{background:rgba(255,255,0,0.4);border-radius:4px}
+.point.valid-move{background:rgba(46,204,113,0.6);border-radius:4px}
 .tri{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0}
 .point.top .tri{clip-path:polygon(0 0,100% 0,50% 100%)}
 .point.bottom .tri{clip-path:polygon(50% 0,0 100%,100% 100%)}
 .tri.red{background:#c0392b}
 .tri.light{background:#e8d8b0}
-.checker{width:100%;aspect-ratio:1;max-width:28px;border-radius:50%;z-index:2;margin:1px 0;border:2px solid rgba(0,0,0,.4);box-sizing:border-box}
+.checker{width:100%;aspect-ratio:1;max-width:26px;border-radius:50%;z-index:2;margin:1px 0;border:2px solid rgba(0,0,0,.4);box-sizing:border-box}
 .checker.w{background:#f5f5f5}
 .checker.b{background:#111}
 .dice-area{margin:10px}
-.dice{display:inline-block;width:45px;height:45px;background:white;color:black;font-size:24px;line-height:45px;border-radius:8px;margin:5px;font-weight:bold}
-button{padding:12px 25px;font-size:16px;background:#e67e22;color:white;border:none;border-radius:8px;cursor:pointer}
+.dice{display:inline-block;width:45px;height:45px;background:white;color:black;font-size:24px;line-height:45px;border-radius:8px;margin:3px;font-weight:bold}
+button{padding:10px 20px;font-size:16px;background:#e67e22;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:bold}
+button:disabled{background:#555;cursor:not-allowed}
 </style>
 </head>
 <body>
-<h1>🎲 بزن روی مهره و حرکتش بده</h1>
+
+<h1>🎲 تخته نرد با قوانین واقعی</h1>
+<div id="turn-info">نوبت: سفید | اول تاس بریزید</div>
 <div id="board"></div>
 <div class="dice-area">
     <div id="d1" class="dice">؟</div>
     <div id="d2" class="dice">؟</div>
-    <button onclick="roll()">پرتاب تاس</button>
+    <br>
+    <button id="roll-btn" onclick="roll()">پرتاب تاس</button>
 </div>
 
 <script>
 let board = Array(24).fill(null).map(() => ({ color: null, count: 0 }));
+let bar = { w: 0, b: 0 };
+let turn = 'w';
+let diceMoves = [];
 let selectedIndex = null;
+let validMoves = [];
 
-// چیدمان اولیه
 function set(p, c, n) { board[p-1] = { color: c, count: n }; }
-set(1, 'b', 2); set(6, 'w', 5); set(8, 'w', 3); set(12, 'b', 5);
-set(13, 'w', 5); set(17, 'b', 3); set(19, 'b', 5); set(24, 'w', 2);
+function initBoard() {
+    set(1, 'b', 2); set(6, 'w', 5); set(8, 'w', 3); set(12, 'b', 5);
+    set(13, 'w', 5); set(17, 'b', 3); set(19, 'b', 5); set(24, 'w', 2);
+}
+initBoard();
 
 function build() {
     let b = document.getElementById('board');
     b.innerHTML = '';
-    // نیمه چپ (خونه‌های 13 تا 18 بالا و 12 تا 7 پایین)
     b.appendChild(makeHalf([13,14,15,16,17,18], [12,11,10,9,8,7]));
-    let bar = document.createElement('div'); bar.className = 'bar'; b.appendChild(bar);
-    // نیمه راست (خونه‌های 19 تا 24 بالا و 6 تا 1 پایین)
+    let barDiv = document.createElement('div');
+    barDiv.className = 'bar';
+    for(let i=0; i<bar.w; i++) { let c = document.createElement('div'); c.className='checker w'; barDiv.appendChild(c); }
+    for(let i=0; i<bar.b; i++) { let c = document.createElement('div'); c.className='checker b'; barDiv.appendChild(c); }
+    b.appendChild(barDiv);
     b.appendChild(makeHalf([19,20,21,22,23,24], [6,5,4,3,2,1]));
 }
 
@@ -66,51 +81,66 @@ function makeHalf(tops, bots) {
 }
 
 function makePoint(p, pos) {
+    let idx = p - 1;
     let d = document.createElement('div');
-    d.className = 'point ' + pos + (selectedIndex === p-1 ? ' selected' : '');
-    d.onclick = () => handleClick(p-1);
-    
+    d.className = 'point ' + pos + (selectedIndex === idx ? ' selected' : '') + (validMoves.includes(idx) ? ' valid-move' : '');
+    d.onclick = () => handleClick(idx);
     let tri = document.createElement('div');
     tri.className = 'tri ' + (p % 2 == 0 ? 'red' : 'light');
     d.appendChild(tri);
-
-    let st = board[p-1];
+    let st = board[idx];
     for (let k = 0; k < st.count; k++) {
-        let c = document.createElement('div');
-        c.className = 'checker ' + st.color;
-        d.appendChild(c);
+        let c = document.createElement('div'); c.className = 'checker ' + st.color; d.appendChild(c);
     }
     return d;
 }
 
-function handleClick(i) {
-    if (selectedIndex === null) {
-        if (board[i].count > 0) {
-            selectedIndex = i;
-        }
-    } else {
-        // حرکت مهره از جای قبلی به جای جدید
-        if (selectedIndex !== i) {
-            let from = board[selectedIndex];
-            let to = board[i];
+function roll() {
+    if (diceMoves.length > 0) return;
+    let d1 = Math.floor(Math.random() * 6) + 1;
+    let d2 = Math.floor(Math.random() * 6) + 1;
+    document.getElementById('d1').innerText = d1;
+    document.getElementById('d2').innerText = d2;
+    diceMoves = (d1 === d2) ? [d1, d1, d1, d1] : [d1, d2];
+    document.getElementById('roll-btn').disabled = true;
+    updateStatus("مهره انتخاب کنید");
+}
 
-            if (to.count === 0 || to.color === from.color) {
-                // اضافه کردن به مقصد
-                to.color = from.color;
-                to.count++;
-                // کم کردن از مبدا
-                from.count--;
-                if (from.count === 0) from.color = null;
-            }
-        }
-        selectedIndex = null;
+function handleClick(idx) {
+    if (diceMoves.length === 0) return;
+    if (selectedIndex === null) {
+        if (board[idx].color === turn) { selectedIndex = idx; calculateValidMoves(idx); }
+    } else {
+        if (validMoves.includes(idx)) { movePiece(selectedIndex, idx); selectedIndex = null; validMoves = []; }
+        else if (board[idx].color === turn) { selectedIndex = idx; calculateValidMoves(idx); }
+        else { selectedIndex = null; validMoves = []; }
     }
     build();
 }
 
-function roll() {
-    document.getElementById('d1').innerText = Math.floor(Math.random() * 6) + 1;
-    document.getElementById('d2').innerText = Math.floor(Math.random() * 6) + 1;
+function calculateValidMoves(fromIdx) {
+    validMoves = [];
+    let dir = turn === 'w' ? -1 : 1;
+    diceMoves.forEach(s => {
+        let t = fromIdx + (s * dir);
+        if (t >= 0 && t < 24) {
+            if (board[t].count <= 1 || board[t].color === turn) validMoves.push(t);
+        }
+    });
+}
+
+function movePiece(f, t) {
+    let dist = Math.abs(t - f);
+    diceMoves.splice(diceMoves.indexOf(dist), 1);
+    if (board[t].count === 1 && board[t].color !== turn) { bar[board[t].color]++; board[t].count = 0; }
+    board[t].color = turn; board[t].count++;
+    board[f].count--; if (board[f].count === 0) board[f].color = null;
+    if (diceMoves.length === 0) { turn = turn === 'w' ? 'b' : 'w'; document.getElementById('roll-btn').disabled = false; updateStatus("تاس بریزید"); }
+}
+
+function updateStatus(msg) {
+    let color = turn === 'w' ? 'سفید' : 'سیاه';
+    document.getElementById('turn-info').innerText = 'نوبت: ' + color + ' | ' + msg;
 }
 
 build();
