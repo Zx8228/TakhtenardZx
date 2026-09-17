@@ -71,7 +71,7 @@ body{margin:0;padding:0;background:#26130a url("data:image/svg+xml;utf8,<svg xml
 
 /* ===== تالار بازی (لابی) ===== */
 #lobby{position:absolute;inset:0;z-index:300;background:#7a3520 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><g fill='none' stroke='%235d2413' stroke-width='3' opacity='.55'><circle cx='110' cy='110' r='34'/><path d='M110 40 q26 26 0 52 q-26 -26 0 -52'/><path d='M110 180 q26 -26 0 -52 q-26 26 0 52'/><path d='M40 110 q26 26 52 0 q-26 -26 -52 0'/><path d='M180 110 q-26 26 -52 0 q26 -26 52 0'/><circle cx='30' cy='30' r='12'/><circle cx='190' cy='190' r='12'/><circle cx='190' cy='30' r='12'/><circle cx='30' cy='190' r='12'/></g></svg>") repeat;background-size:220px 220px;color:#fff;font-family:Tahoma;overflow:hidden}
-#lobby .topbar{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+#lobby .topbar{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;direction:ltr}
 .lv-avatar{width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 50% 32%,#4a2c17,#201007);border:2px solid #8a5a2a;display:flex;align-items:center;justify-content:center;font-size:30px;position:relative;box-shadow:0 5px 0 -2px #c9861f,0 8px 12px rgba(0,0,0,.5)}
 .lv-badge{position:absolute;top:-8px;right:-12px;background:radial-gradient(circle at 35% 30%,#9ed1ff,#1976d2);border:2px solid #fff;border-radius:12px;padding:1px 8px;font-size:12px;font-weight:bold;color:#fff;box-shadow:0 2px 4px rgba(0,0,0,.5)}
 .lv-name{background:linear-gradient(#d7ccc8,#a1887f);color:#3e2723;border:2px solid #6d4c41;border-radius:8px;padding:2px 12px;font-weight:bold;font-size:13px;box-shadow:0 2px 4px rgba(0,0,0,.4)}
@@ -80,7 +80,7 @@ body{margin:0;padding:0;background:#26130a url("data:image/svg+xml;utf8,<svg xml
 .cur-pill{display:flex;align-items:center;gap:5px;background:linear-gradient(#efebe9,#bcaaa4);border:2px solid #6d4c41;border-radius:10px;padding:3px 10px;color:#3e2723;font-weight:bold;font-size:14px;box-shadow:0 2px 4px rgba(0,0,0,.4)}
 .cur-pill .plus{color:#2e7d32;font-size:15px;font-weight:bold}
 .menu-btn{width:44px;height:44px;background:linear-gradient(#efebe9,#bcaaa4);border:2px solid #6d4c41;border-radius:10px;font-size:20px;color:#3e2723;cursor:pointer}
-#lv-stage{position:absolute;top:13%;bottom:24%;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:4%}
+#lv-stage{position:absolute;top:13%;bottom:24%;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:4%;direction:ltr}
 .lv-side{width:16%;max-width:140px;height:70%;border-radius:10px;border:3px solid rgba(0,0,0,.35);box-shadow:0 10px 18px rgba(0,0,0,.45);cursor:pointer;position:relative;transform:perspective(700px) rotateY(28deg)}
 .lv-side.right{transform:perspective(700px) rotateY(-28deg)}
 .lv-side .tname{position:absolute;top:-26px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:bold;color:#fff;text-shadow:0 1px 3px #000;white-space:nowrap}
@@ -90,9 +90,16 @@ body{margin:0;padding:0;background:#26130a url("data:image/svg+xml;utf8,<svg xml
 .lv-boardwrap{filter:drop-shadow(0 14px 22px rgba(0,0,0,.55))}
 .lv-pedestal{width:240px;height:56px;background:radial-gradient(ellipse at 50% 30%,#c9861f,#8a5a12 60%,#5d3c0a);border-radius:50%;box-shadow:0 0 44px 14px rgba(255,190,80,.35),inset 0 6px 10px rgba(255,255,255,.35);margin-top:-24px}
 .entry-pill{background:linear-gradient(#a1663a,#7a4526);border:2px solid #4e2c17;border-radius:12px;padding:6px 16px;font-size:14px;font-weight:bold;color:#ffe0b2;box-shadow:0 3px 8px rgba(0,0,0,.5)}
-#lv-bottom{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:10px}
+#lv-bottom{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 14px;direction:ltr}
 .lv-bigbtn{background:linear-gradient(#ffd54f,#f9a825 60%,#e65100);border:3px solid #8a4a00;border-radius:14px;padding:12px 34px;font-size:18px;font-weight:bold;color:#4e2c00;cursor:pointer;box-shadow:0 5px 0 #7a3c00,0 8px 14px rgba(0,0,0,.5);font-family:Tahoma}
-.lv-smallbtn{background:linear-gradient(#ffd54f,#f9a825);border:3px solid #8a4a00;border-radius:12px;padding:10px 14px;font-weight:bold;color:#4e2c00;cursor:pointer;box-shadow:0 4px 0 #7a3c00;font-family:Tahoma;font-size:13px}
+.lv-smallbtn{background:linear-gradient(#ffd54f,#f9a825);border:3px solid #8a4a00;border-radius:14px;padding:8px 18px;font-weight:bold;color:#4e2c00;cursor:pointer;box-shadow:0 4px 0 #7a3c00,0 6px 10px rgba(0,0,0,.4);font-family:Tahoma;font-size:14px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.lv-smallbtn .ic{font-size:24px;line-height:1}
+.lv-lvl{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#9ed1ff,#1976d2);border:2px solid #fff;font-size:12px;font-weight:bold;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.5);flex:none}
+input.lv-name{background:linear-gradient(#d7ccc8,#a1887f);color:#3e2723;border:2px solid #6d4c41;border-radius:8px;padding:3px 12px;font-weight:bold;font-size:13px;font-family:Tahoma;width:140px;box-shadow:0 2px 4px rgba(0,0,0,.4);outline:none}
+.lv-lottery{position:absolute;right:10px;top:34%;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;z-index:5}
+.lottery-icon{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#b9f6ca,#2e7d32 60%,#1b5e20);border:3px solid #ffd54f;color:#fff;font-size:28px;font-weight:bold;display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px 5px rgba(46,204,113,.45),0 4px 8px rgba(0,0,0,.5);text-shadow:0 2px 3px rgba(0,0,0,.6);animation:pulse 1.8s infinite}
+.lottery-label{font-size:11px;font-weight:bold;color:#ffe082;text-shadow:0 1px 3px #000;background:rgba(0,0,0,.4);padding:2px 8px;border-radius:8px;white-space:nowrap}
+.entry-pill{cursor:pointer;animation:pulse 1.6s infinite}
 </style>
 </head>
 <body>
@@ -100,17 +107,22 @@ body{margin:0;padding:0;background:#26130a url("data:image/svg+xml;utf8,<svg xml
 <div id="lobby">
     <div class="topbar">
         <div style="display:flex;align-items:center;gap:8px">
-            <div class="lv-avatar" id="lv-av">😎<span class="lv-badge" id="lv-lvl">۱۳</span></div>
-            <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-start">
-                <div class="lv-bar"><i style="width:40%"></i></div>
-                <div class="lv-name" id="lv-name">بازیکن</div>
+            <div class="lv-avatar" id="lv-av">😎</div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+                <div style="display:flex;align-items:center;gap:4px">
+                    <span class="lv-lvl" id="lv-lvl">۱۳</span>
+                    <div class="lv-bar"><i style="width:40%"></i></div>
+                </div>
+                <input class="lv-name" id="lv-name" maxlength="14" dir="rtl" style="text-align:center" onchange="myName=this.value;render()">
             </div>
         </div>
         <div style="display:flex;align-items:center;gap:6px">
-            <div class="cur-pill"><span class="plus">✚</span><span id="lv-gems">۱۰</span>💎</div>
             <div class="cur-pill"><span class="plus">✚</span><span id="lv-coins">۰</span>🪙</div>
-            <button class="menu-btn" onclick="showToast('منو به‌زودی!')">☰</button>
         </div>
+    </div>
+    <div class="lv-lottery" onclick="showToast('🎁 لاتاری روزانه به‌زودی!')">
+        <div class="lottery-icon">$</div>
+        <div class="lottery-label">لاتاری روزانه</div>
     </div>
     <div id="lv-stage">
         <div class="lv-side left" id="lv-left" onclick="sidePick(-1)"></div>
@@ -118,14 +130,13 @@ body{margin:0;padding:0;background:#26130a url("data:image/svg+xml;utf8,<svg xml
             <div class="lv-title" id="lv-title"></div>
             <div class="lv-boardwrap" id="lv-board"></div>
             <div class="lv-pedestal"></div>
-            <div class="entry-pill" id="lv-entry"></div>
+            <div class="entry-pill" id="lv-entry" onclick="enterGame()" title="ورود به بازی"></div>
         </div>
         <div class="lv-side right" id="lv-right" onclick="sidePick(1)"></div>
     </div>
     <div id="lv-bottom">
-        <button class="lv-smallbtn" onclick="showToast('🏪 فروشگاه به‌زودی!')">🏪 فروشگاه</button>
-        <button class="lv-bigbtn" onclick="enterGame()">🎲 ورود به بازی</button>
-        <button class="lv-smallbtn" onclick="showToast('👥 اتحاد به‌زودی!')">👥 اتحاد</button>
+        <button class="lv-smallbtn" onclick="showToast('🏪 فروشگاه به‌زودی!')"><span class="ic">🏪</span>فروشگاه</button>
+        <button class="lv-smallbtn" onclick="showToast('👥 دوستان به‌زودی!')"><span class="ic">👥</span>دوستان</button>
     </div>
 </div>
 
@@ -396,7 +407,7 @@ function checkGameOver(){
         let winner=off.w===15?'w':'b';
         let mars=(winner==='w'?off.b:off.w)===0;
         scores[winner]+=mars?2:1;
-        if(winner===myColor){coins+=TABLES[curTable].prize;showToast("🪙 جایزه برد: +"+FA(TABLES[curTable].prize));}
+        if(winner===myColor){coins+=TABLES[curTable].prize;showToast("🪙 جایزه برد: +"+FAm(TABLES[curTable].prize));}
         let wName=winner===myColor?myName:opp.name;
         document.getElementById('result-text').innerHTML=mars?("🏆 "+wName+"<br><span style='color:#ffd700'>مارس! +۲ امتیاز</span>"):("🏆 "+wName+" برنده شد! +۱ امتیاز");
         document.getElementById('gameover-modal').style.display='flex';
@@ -482,6 +493,7 @@ function makePoint(p,pos){
     d.onclick=()=>handleClick(idx);
     let tri=document.createElement('div');
     tri.className='tri '+(p%2?'a':'b');
+    tri.style.backgroundImage=(p%2?themeTriA:themeTriB);
     d.appendChild(tri);
     let n=st.count||0,mini=n>5;
     for(let k=0;k<n;k++){
@@ -496,13 +508,51 @@ render();
 
 /* ===== منطق تالار ===== */
 const TABLES=[
- {name:'اصفهان', entry:50000,   prize:95000,   lvl:1, cover:'linear-gradient(160deg,#4dd0e1,#00838f 60%,#006064)', board:['#e0f7fa','#00838f','#bf360c','#01579b']},
- {name:'رشت',    entry:100000,  prize:190000,  lvl:1, cover:'linear-gradient(160deg,#66bb6a,#1b5e20 60%,#0d3b10)', board:['#c8e6c9','#2e7d32','#bf360c','#1b5e20']},
- {name:'تهران',  entry:250000,  prize:475000,  lvl:1, cover:'linear-gradient(160deg,#fafafa,#b0bec5 55%,#78909c)', board:['#eceff1','#90a4ae','#b71c1c','#37474f']},
- {name:'امارات', entry:500000,  prize:950000,  lvl:1, cover:'linear-gradient(160deg,#ffd54f,#b8860b 55%,#8a5a00)', board:['#f3d290','#b8860b','#3e2723','#8a5a00']},
- {name:'دوبی',   entry:1000000, prize:1900000, lvl:1, cover:'linear-gradient(160deg,#e6c26e,#8a6d1d 55%,#4e3a08)', board:['#f6e3b4','#8a6d1d','#263238','#4e3a08']}
+ {name:'اصفهان', emoji:'🕌', entry:50000,   prize:95000,   lvl:1, motif:'star',
+  cover:'linear-gradient(160deg,#4dd0e1,#00838f 60%,#006064)',
+  board:['#e0f7fa','#00838f','#bf360c','#01579b'],
+  triA:'#00838f', triB:'#8a5a2a',
+  frame:'linear-gradient(#7fd4cf,#26a69a)',
+  bg:"#e0f2f1 url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='130' height='130'><path d='M65 25 L75 55 L105 65 L75 75 L65 105 L55 75 L25 65 L55 55 Z' fill='none' stroke='%2326a69a' stroke-width='2' opacity='.4'/><circle cx='65' cy='65' r='6' fill='%2326a69a' opacity='.3'/></svg>) 0 0/130px 130px repeat"},
+ {name:'رشت',    emoji:'🌧️', entry:100000,  prize:190000,  lvl:1, motif:'rain',
+  cover:'linear-gradient(160deg,#66bb6a,#1b5e20 60%,#0d3b10)',
+  board:['#c8e6c9','#2e7d32','#bf360c','#1b5e20'],
+  triA:'#2e7d32', triB:'#4e3a24',
+  frame:'linear-gradient(#a5d6a7,#388e3c)',
+  bg:"#e8f0e4 url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><g fill='%235b8bd0' opacity='.35'><path d='M35 25 q7 10 0 16 q-7 -6 0 -16'/><path d='M75 50 q7 10 0 16 q-7 -6 0 -16'/><path d='M48 85 q7 10 0 16 q-7 -6 0 -16'/><path d='M95 90 q7 10 0 16 q-7 -6 0 -16'/></g><path d='M20 18 q10 -10 22 0 q12 -8 20 2' fill='none' stroke='%234a7a5a' stroke-width='2' opacity='.35'/></svg>) 0 0/120px 120px repeat"},
+ {name:'تهران',  emoji:'🏙️', entry:250000,  prize:475000,  lvl:1, motif:'mountain',
+  cover:'linear-gradient(160deg,#fafafa,#b0bec5 55%,#78909c)',
+  board:['#eceff1','#90a4ae','#b71c1c','#37474f'],
+  triA:'#546e7a', triB:'#8d6e63',
+  frame:'linear-gradient(#cfd8dc,#78909c)',
+  bg:"#eceff1 url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><path d='M10 100 L45 55 L65 80 L95 40 L130 100' fill='none' stroke='%2390a4ae' stroke-width='2' opacity='.45'/><path d='M88 49 L95 40 L102 50 L95 55 Z' fill='%23eceff1' opacity='.8'/></svg>) 0 0/140px 140px repeat"},
+ {name:'امارات', emoji:'🏜️', entry:500000,  prize:950000,  lvl:1, motif:'dune',
+  cover:'linear-gradient(160deg,#ffd54f,#b8860b 55%,#8a5a00)',
+  board:['#f3d290','#b8860b','#3e2723','#8a5a00'],
+  triA:'#b8860b', triB:'#7a4526',
+  frame:'linear-gradient(#ffe082,#c9861f)',
+  bg:"#f6e3b4 url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><path d='M0 85 q35 -24 70 0 t70 0' fill='none' stroke='%23c9861f' stroke-width='2' opacity='.45'/><path d='M0 110 q35 -18 70 0 t70 0' fill='none' stroke='%23c9861f' stroke-width='2' opacity='.3'/><circle cx='105' cy='35' r='13' fill='%23e6a817' opacity='.35'/></svg>) 0 0/140px 140px repeat"},
+ {name:'دوبی',   emoji:'🌃', entry:1000000, prize:1900000, lvl:1, motif:'night',
+  cover:'linear-gradient(160deg,#e6c26e,#8a6d1d 55%,#4e3a08)',
+  board:['#37474f','#263238','#ffd54f','#4fc3f7'],
+  triA:'#ffca28', triB:'#4fc3f7',
+  frame:'linear-gradient(#546e7a,#263238)',
+  bg:"#263238 url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='130' height='130'><path d='M82 38 a20 20 0 1 0 16 32 a16 16 0 1 1 -16 -32' fill='%23ffd54f' opacity='.3'/><g stroke='%23ffd54f' stroke-width='2' opacity='.4'><path d='M30 30 h10 M35 25 v10'/><path d='M40 90 h8 M44 86 v8'/><path d='M100 95 h8 M104 91 v8'/></g></svg>) 0 0/130px 130px repeat"}
 ];
-let myLevel=13, coins=5000000, gems=10, curTable=2;
+let myLevel=13, coins=5000000, gems=10, curTable=0;
+var themeTriA, themeTriB;
+
+function triURI(c){
+    return "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 200' preserveAspectRatio='none'><g fill='none' stroke='"+c+"'><path stroke-width='3' d='M20 4 L31 34 V150 L20 196 L9 150 V34 Z'/><path stroke-width='2' d='M20 26 L26 44 V140 L20 172 L14 140 V44 Z'/><path stroke-width='2' d='M20 62 L24 76 V120 L20 138 L16 120 V76 Z'/></g><path d='M20 92 l6 10 -6 10 -6 -10 Z' fill='"+c+"'/></svg>\")";
+}
+
+function motifSVG(m,c){
+    if(m==='star')  return "<path d='M106 46 L111 62 L127 67 L111 72 L106 88 L101 72 L85 67 L101 62 Z' fill='"+c+"' opacity='.85'/>";
+    if(m==='rain')  return "<ellipse cx='106' cy='56' rx='15' ry='9' fill='"+c+"' opacity='.85'/><g fill='"+c+"'><path d='M98 70 q4 7 0 11 q-4 -4 0 -11'/><path d='M106 72 q4 7 0 11 q-4 -4 0 -11'/><path d='M114 70 q4 7 0 11 q-4 -4 0 -11'/></g>";
+    if(m==='mountain') return "<path d='M86 84 L99 60 L107 73 L118 52 L128 84 Z' fill='"+c+"' opacity='.85'/><path d='M114 60 L118 52 L123 61 L118 65 Z' fill='#fff' opacity='.9'/>";
+    if(m==='dune')  return "<circle cx='106' cy='56' r='9' fill='"+c+"' opacity='.9'/><path d='M86 80 q10 -9 20 0 t20 0' fill='none' stroke='"+c+"' stroke-width='3' opacity='.85'/>";
+    return "<path d='M112 52 a13 13 0 1 0 10 22 a11 11 0 1 1 -10 -22' fill='"+c+"' opacity='.9'/><g stroke='"+c+"' stroke-width='2'><path d='M92 60 h8 M96 56 v8'/><path d='M98 82 h6 M101 79 v6'/></g>";
+}
 
 function boardSVG(t){
     const bg=t.board[0],fr=t.board[1],p1=t.board[2],p2=t.board[3];
@@ -518,42 +568,60 @@ function boardSVG(t){
     return '<svg width="212" height="140" viewBox="0 0 212 140" xmlns="http://www.w3.org/2000/svg">'+
       '<rect x="0" y="0" width="212" height="140" rx="10" fill="'+fr+'"/>'+
       '<rect x="6" y="6" width="200" height="128" rx="6" fill="'+bg+'"/>'+
-      '<rect x="100" y="6" width="12" height="128" fill="'+fr+'" opacity=".85"/>'+pts+'</svg>';
+      '<rect x="100" y="6" width="12" height="128" fill="'+fr+'" opacity=".85"/>'+pts+
+      motifSVG(t.motif,p1)+'</svg>';
 }
 
 function renderLobby(){
-    const t=TABLES[curTable],L=TABLES.length;
-    const le=TABLES[(curTable-1+L)%L], re=TABLES[(curTable+1)%L];
+    const t=TABLES[curTable], pv=TABLES[curTable-1], nx=TABLES[curTable+1];
     const lEl=document.getElementById('lv-left'), rEl=document.getElementById('lv-right');
-    lEl.style.background=le.cover; rEl.style.background=re.cover;
-    lEl.innerHTML='<div class="tname">'+le.name+'</div>'+(le.lvl>myLevel?'<div class="lockpill">🔒 سطح '+FA(le.lvl)+'</div>':'');
-    rEl.innerHTML='<div class="tname">'+re.name+'</div>'+(re.lvl>myLevel?'<div class="lockpill">🔒 سطح '+FA(re.lvl)+'</div>':'');
+    if(pv){
+        lEl.style.visibility='visible';
+        lEl.style.background=pv.cover;
+        lEl.innerHTML='<div class="tname">'+pv.name+'</div>';
+    }else{
+        lEl.style.visibility='hidden'; lEl.innerHTML='';
+    }
+    if(nx){
+        rEl.style.visibility='visible';
+        rEl.style.background=nx.cover;
+        rEl.innerHTML='<div class="tname">'+nx.name+'</div>';
+    }else{
+        rEl.style.visibility='hidden'; rEl.innerHTML='';
+    }
     document.getElementById('lv-title').innerText=t.name;
     document.getElementById('lv-board').innerHTML=boardSVG(t);
-    document.getElementById('lv-entry').innerText='ورودی: '+FA(t.entry)+' 🪙   |   جایزه: '+FA(t.prize)+' 🪙';
+    document.getElementById('lv-entry').innerText='ورودی: '+FAm(t.entry)+' 🪙   |   جایزه: '+FAm(t.prize)+' 🪙';
     renderLobbyTop();
 }
+function FAm(n){return FA(n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.'));}
 function renderLobbyTop(){
-    document.getElementById('lv-coins').innerText=FA(coins);
-    document.getElementById('lv-gems').innerText=FA(gems);
+    document.getElementById('lv-coins').innerText=FAm(coins);
     document.getElementById('lv-lvl').innerText=FA(myLevel);
-    document.getElementById('lv-name').innerText=myName;
+    if(document.activeElement!==document.getElementById('lv-name'))document.getElementById('lv-name').value=myName;
     document.getElementById('lv-av').childNodes[0].textContent=myAvatar;
 }
 function sidePick(dir){
-    const L=TABLES.length, idx=(curTable+dir+L)%L;
-    if(TABLES[idx].lvl>myLevel){showToast('🔒 برای میز '+TABLES[idx].name+' سطح '+FA(TABLES[idx].lvl)+' لازمه!');return;}
-    curTable=idx; renderLobby();
+    const idx=curTable+dir;
+    if(idx>=0&&idx<TABLES.length){curTable=idx;renderLobby();}
+}
+function applyTheme(t){
+    themeTriA=triURI(t.triA); themeTriB=triURI(t.triB);
+    document.getElementById('board').style.background=t.bg;
+    document.getElementById('board-frame').style.background=t.frame;
 }
 function enterGame(){
     const t=TABLES[curTable];
     if(coins<t.entry){showToast('🪙 موجودی کافی نیست!');return;}
     coins-=t.entry;
+    applyTheme(t); render();
     document.getElementById('lobby').style.display='none';
-    setStatus('🏟 میز '+t.name+' — ورودی '+FA(t.entry)+' | جایزه '+FA(t.prize));
+    setStatus('🏟 میز '+t.name+' — ورودی '+FAm(t.entry)+' | جایزه '+FAm(t.prize));
     renderLobbyTop();
 }
 renderLobby();
+applyTheme(TABLES[curTable]);
+render();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3c820f028d888c5',t:'MTc4OTY0ODI5NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3c85ee9ede89ed7',t:'MTc4OTY1MDgzMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
