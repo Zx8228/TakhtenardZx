@@ -68,10 +68,66 @@ body{margin:0;padding:0;background:#26130a url("data:image/svg+xml;utf8,<svg xml
 .btn{padding:9px 16px;background:#e67e22;color:#fff;border:none;border-radius:7px;cursor:pointer;font-family:Tahoma;font-weight:bold;margin:4px}
 .btn-green{background:#27ae60}
 #status-msg{position:absolute;top:8px;left:50%;transform:translateX(-50%);font-size:13px;color:#ffd700;background:rgba(0,0,0,.5);padding:4px 12px;border-radius:12px;z-index:40}
+
+/* ===== تالار بازی (لابی) ===== */
+#lobby{position:absolute;inset:0;z-index:300;background:#7a3520 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><g fill='none' stroke='%235d2413' stroke-width='3' opacity='.55'><circle cx='110' cy='110' r='34'/><path d='M110 40 q26 26 0 52 q-26 -26 0 -52'/><path d='M110 180 q26 -26 0 -52 q-26 26 0 52'/><path d='M40 110 q26 26 52 0 q-26 -26 -52 0'/><path d='M180 110 q-26 26 -52 0 q26 -26 52 0'/><circle cx='30' cy='30' r='12'/><circle cx='190' cy='190' r='12'/><circle cx='190' cy='30' r='12'/><circle cx='30' cy='190' r='12'/></g></svg>") repeat;background-size:220px 220px;color:#fff;font-family:Tahoma;overflow:hidden}
+#lobby .topbar{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.lv-avatar{width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 50% 32%,#4a2c17,#201007);border:2px solid #8a5a2a;display:flex;align-items:center;justify-content:center;font-size:30px;position:relative;box-shadow:0 5px 0 -2px #c9861f,0 8px 12px rgba(0,0,0,.5)}
+.lv-badge{position:absolute;top:-8px;right:-12px;background:radial-gradient(circle at 35% 30%,#9ed1ff,#1976d2);border:2px solid #fff;border-radius:12px;padding:1px 8px;font-size:12px;font-weight:bold;color:#fff;box-shadow:0 2px 4px rgba(0,0,0,.5)}
+.lv-name{background:linear-gradient(#d7ccc8,#a1887f);color:#3e2723;border:2px solid #6d4c41;border-radius:8px;padding:2px 12px;font-weight:bold;font-size:13px;box-shadow:0 2px 4px rgba(0,0,0,.4)}
+.lv-bar{width:150px;height:14px;background:#8d6e63;border:2px solid #5d4037;border-radius:8px;overflow:hidden}
+.lv-bar i{display:block;height:100%;background:linear-gradient(#90caf9,#1976d2)}
+.cur-pill{display:flex;align-items:center;gap:5px;background:linear-gradient(#efebe9,#bcaaa4);border:2px solid #6d4c41;border-radius:10px;padding:3px 10px;color:#3e2723;font-weight:bold;font-size:14px;box-shadow:0 2px 4px rgba(0,0,0,.4)}
+.cur-pill .plus{color:#2e7d32;font-size:15px;font-weight:bold}
+.menu-btn{width:44px;height:44px;background:linear-gradient(#efebe9,#bcaaa4);border:2px solid #6d4c41;border-radius:10px;font-size:20px;color:#3e2723;cursor:pointer}
+#lv-stage{position:absolute;top:13%;bottom:24%;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:4%}
+.lv-side{width:16%;max-width:140px;height:70%;border-radius:10px;border:3px solid rgba(0,0,0,.35);box-shadow:0 10px 18px rgba(0,0,0,.45);cursor:pointer;position:relative;transform:perspective(700px) rotateY(28deg)}
+.lv-side.right{transform:perspective(700px) rotateY(-28deg)}
+.lv-side .tname{position:absolute;top:-26px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:bold;color:#fff;text-shadow:0 1px 3px #000;white-space:nowrap}
+.lv-side .lockpill{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);background:rgba(40,40,40,.88);border-radius:8px;padding:3px 8px;font-size:11px;color:#ffd54f;white-space:nowrap}
+.lv-center{display:flex;flex-direction:column;align-items:center;gap:6px}
+.lv-title{font-size:16px;font-weight:bold;color:#fff;text-shadow:0 2px 4px #000}
+.lv-boardwrap{filter:drop-shadow(0 14px 22px rgba(0,0,0,.55))}
+.lv-pedestal{width:240px;height:56px;background:radial-gradient(ellipse at 50% 30%,#c9861f,#8a5a12 60%,#5d3c0a);border-radius:50%;box-shadow:0 0 44px 14px rgba(255,190,80,.35),inset 0 6px 10px rgba(255,255,255,.35);margin-top:-24px}
+.entry-pill{background:linear-gradient(#a1663a,#7a4526);border:2px solid #4e2c17;border-radius:12px;padding:6px 16px;font-size:14px;font-weight:bold;color:#ffe0b2;box-shadow:0 3px 8px rgba(0,0,0,.5)}
+#lv-bottom{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:10px}
+.lv-bigbtn{background:linear-gradient(#ffd54f,#f9a825 60%,#e65100);border:3px solid #8a4a00;border-radius:14px;padding:12px 34px;font-size:18px;font-weight:bold;color:#4e2c00;cursor:pointer;box-shadow:0 5px 0 #7a3c00,0 8px 14px rgba(0,0,0,.5);font-family:Tahoma}
+.lv-smallbtn{background:linear-gradient(#ffd54f,#f9a825);border:3px solid #8a4a00;border-radius:12px;padding:10px 14px;font-weight:bold;color:#4e2c00;cursor:pointer;box-shadow:0 4px 0 #7a3c00;font-family:Tahoma;font-size:13px}
 </style>
 </head>
 <body>
 <div id="rotator">
+<div id="lobby">
+    <div class="topbar">
+        <div style="display:flex;align-items:center;gap:8px">
+            <div class="lv-avatar" id="lv-av">😎<span class="lv-badge" id="lv-lvl">۱۳</span></div>
+            <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-start">
+                <div class="lv-bar"><i style="width:40%"></i></div>
+                <div class="lv-name" id="lv-name">بازیکن</div>
+            </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">
+            <div class="cur-pill"><span class="plus">✚</span><span id="lv-gems">۱۰</span>💎</div>
+            <div class="cur-pill"><span class="plus">✚</span><span id="lv-coins">۰</span>🪙</div>
+            <button class="menu-btn" onclick="showToast('منو به‌زودی!')">☰</button>
+        </div>
+    </div>
+    <div id="lv-stage">
+        <div class="lv-side left" id="lv-left" onclick="sidePick(-1)"></div>
+        <div class="lv-center">
+            <div class="lv-title" id="lv-title"></div>
+            <div class="lv-boardwrap" id="lv-board"></div>
+            <div class="lv-pedestal"></div>
+            <div class="entry-pill" id="lv-entry"></div>
+        </div>
+        <div class="lv-side right" id="lv-right" onclick="sidePick(1)"></div>
+    </div>
+    <div id="lv-bottom">
+        <button class="lv-smallbtn" onclick="showToast('🏪 فروشگاه به‌زودی!')">🏪 فروشگاه</button>
+        <button class="lv-bigbtn" onclick="enterGame()">🎲 ورود به بازی</button>
+        <button class="lv-smallbtn" onclick="showToast('👥 اتحاد به‌زودی!')">👥 اتحاد</button>
+    </div>
+</div>
 
 <div class="corner-btns">
     <button class="gold-btn" onclick="changeName()">⚙️</button>
@@ -340,6 +396,7 @@ function checkGameOver(){
         let winner=off.w===15?'w':'b';
         let mars=(winner==='w'?off.b:off.w)===0;
         scores[winner]+=mars?2:1;
+        if(winner===myColor){coins+=TABLES[curTable].prize;showToast("🪙 جایزه برد: +"+FA(TABLES[curTable].prize));}
         let wName=winner===myColor?myName:opp.name;
         document.getElementById('result-text').innerHTML=mars?("🏆 "+wName+"<br><span style='color:#ffd700'>مارس! +۲ امتیاز</span>"):("🏆 "+wName+" برنده شد! +۱ امتیاز");
         document.getElementById('gameover-modal').style.display='flex';
@@ -436,6 +493,67 @@ function makePoint(p,pos){
 }
 
 render();
+
+/* ===== منطق تالار ===== */
+const TABLES=[
+ {name:'دبی',       entry:50000, prize:90000, lvl:1,  cover:'linear-gradient(160deg,#ffd54f,#b8860b 55%,#8a5a00)', board:['#f3d290','#b8860b','#3e2723','#8a5a00']},
+ {name:'هندوستان',  entry:5000,  prize:9000,  lvl:1,  cover:'linear-gradient(160deg,#66bb6a,#1b5e20 60%,#0d3b10)', board:['#c8e6c9','#2e7d32','#bf360c','#1b5e20']},
+ {name:'ایتالیا',   entry:5000,  prize:9000,  lvl:1,  cover:'linear-gradient(160deg,#fafafa,#b0bec5 55%,#78909c)', board:['#eceff1','#90a4ae','#b71c1c','#37474f']},
+ {name:'ژاپن',      entry:20000, prize:36000, lvl:20, cover:'linear-gradient(160deg,#90caf9,#1565c0 60%,#0d47a1)', board:['#e3f2fd','#1976d2','#c62828','#0d47a1']},
+ {name:'ایران',     entry:1000,  prize:1800,  lvl:1,  cover:'linear-gradient(160deg,#e0c9a0,#8a5a2a 60%,#5d3c17)', board:['#ead7ab','#5a3a1a','#3d85a8','#7a5a2a']}
+];
+let myLevel=13, coins=59033, gems=10, curTable=2;
+
+function boardSVG(t){
+    const bg=t.board[0],fr=t.board[1],p1=t.board[2],p2=t.board[3];
+    let pts='';
+    for(let i=0;i<6;i++){
+        let x=10+i*14;
+        pts+='<path d="M'+x+' 8 h11 l-5.5 26 z" fill="'+(i%2?p2:p1)+'"/>';
+        pts+='<path d="M'+x+' 132 h11 l-5.5 -26 z" fill="'+(i%2?p1:p2)+'"/>';
+        let xr=116+i*14;
+        pts+='<path d="M'+xr+' 8 h11 l-5.5 26 z" fill="'+(i%2?p1:p2)+'"/>';
+        pts+='<path d="M'+xr+' 132 h11 l-5.5 -26 z" fill="'+(i%2?p2:p1)+'"/>';
+    }
+    return '<svg width="212" height="140" viewBox="0 0 212 140" xmlns="http://www.w3.org/2000/svg">'+
+      '<rect x="0" y="0" width="212" height="140" rx="10" fill="'+fr+'"/>'+
+      '<rect x="6" y="6" width="200" height="128" rx="6" fill="'+bg+'"/>'+
+      '<rect x="100" y="6" width="12" height="128" fill="'+fr+'" opacity=".85"/>'+pts+'</svg>';
+}
+
+function renderLobby(){
+    const t=TABLES[curTable],L=TABLES.length;
+    const le=TABLES[(curTable-1+L)%L], re=TABLES[(curTable+1)%L];
+    const lEl=document.getElementById('lv-left'), rEl=document.getElementById('lv-right');
+    lEl.style.background=le.cover; rEl.style.background=re.cover;
+    lEl.innerHTML='<div class="tname">'+le.name+'</div>'+(le.lvl>myLevel?'<div class="lockpill">🔒 سطح '+FA(le.lvl)+'</div>':'');
+    rEl.innerHTML='<div class="tname">'+re.name+'</div>'+(re.lvl>myLevel?'<div class="lockpill">🔒 سطح '+FA(re.lvl)+'</div>':'');
+    document.getElementById('lv-title').innerText=t.name;
+    document.getElementById('lv-board').innerHTML=boardSVG(t);
+    document.getElementById('lv-entry').innerText='ورودی: '+FA(t.entry)+' 🪙   |   جایزه: '+FA(t.prize)+' 🪙';
+    renderLobbyTop();
+}
+function renderLobbyTop(){
+    document.getElementById('lv-coins').innerText=FA(coins);
+    document.getElementById('lv-gems').innerText=FA(gems);
+    document.getElementById('lv-lvl').innerText=FA(myLevel);
+    document.getElementById('lv-name').innerText=myName;
+    document.getElementById('lv-av').childNodes[0].textContent=myAvatar;
+}
+function sidePick(dir){
+    const L=TABLES.length, idx=(curTable+dir+L)%L;
+    if(TABLES[idx].lvl>myLevel){showToast('🔒 برای میز '+TABLES[idx].name+' سطح '+FA(TABLES[idx].lvl)+' لازمه!');return;}
+    curTable=idx; renderLobby();
+}
+function enterGame(){
+    const t=TABLES[curTable];
+    if(coins<t.entry){showToast('🪙 موجودی کافی نیست!');return;}
+    coins-=t.entry;
+    document.getElementById('lobby').style.display='none';
+    setStatus('🏟 میز '+t.name+' — ورودی '+FA(t.entry)+' | جایزه '+FA(t.prize));
+    renderLobbyTop();
+}
+renderLobby();
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3c7f66f5eae88c5',t:'MTc4OTY0NjU1Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
