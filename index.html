@@ -18,7 +18,7 @@ body{margin:0;padding:0;background:#26130a url("data:image/svg+xml;utf8,<svg xml
 .corner-btns{position:absolute;top:8px;right:8px;z-index:50;display:flex;gap:8px}
 .gold-btn{width:46px;height:46px;border-radius:50%;border:2px solid #8a6d1d;background:radial-gradient(circle at 35% 30%,#ffe27a,#e6a817 60%,#a86f00);font-size:20px;cursor:pointer;box-shadow:0 3px 6px rgba(0,0,0,.5),inset 0 2px 2px rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center}
 /* چیدمان اصلی افقی */
-#game{display:flex;justify-content:center;align-items:stretch;gap:6px;padding:6px;height:100%;max-width:1200px;margin:0 auto}
+#game{display:flex;justify-content:center;align-items:stretch;gap:6px;padding:34px 6px 32px;height:100%;max-width:1200px;margin:0 auto}
 .panel{width:11%;min-width:80px;max-width:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:6px 4px}
 .pname{font-size:11px;font-weight:bold;color:#fff;padding:4px 6px;border-radius:4px;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;clip-path:polygon(7% 0,93% 0,100% 50%,93% 100%,7% 100%,0 50%);box-shadow:0 2px 4px rgba(0,0,0,.5)}
 .panel.me .pname{background:linear-gradient(#4fc3f7,#1976d2)}
@@ -27,7 +27,7 @@ body{margin:0;padding:0;background:#26130a url("data:image/svg+xml;utf8,<svg xml
 .dice-row{display:flex;gap:4px;background:#191919;border:1px solid #454545;border-radius:9px;padding:4px;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
 .dbox{width:27px;height:27px;background:linear-gradient(#9a9a9a,#6a6a6a);border-radius:6px;border:1px solid #3a3a3a;font-size:17px;line-height:27px;color:#1c1c1c}
 .avatar{width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 50% 32%,#4a2c17,#201007);border:2px solid #8a5a2a;display:flex;align-items:center;justify-content:center;font-size:30px;position:relative;box-shadow:0 6px 0 -2px #c9861f,0 9px 12px rgba(0,0,0,.55)}
-.avatar .flag{position:absolute;bottom:-2px;right:-8px;font-size:15px}
+.avatar .flag{position:absolute;bottom:-6px;right:-8px;font-size:10px;font-weight:bold;background:radial-gradient(circle at 35% 30%,#9ed1ff,#1976d2);border:1.5px solid #fff;color:#fff;border-radius:10px;padding:1px 5px;box-shadow:0 1px 3px rgba(0,0,0,.5)}
 .avatar.glow{box-shadow:0 6px 0 -2px #c9861f,0 0 16px 5px #2ecc71}
 .offcount{font-size:11px;font-weight:bold;color:#222;background:linear-gradient(#ded8c6,#b9b29c);border-radius:7px;padding:4px 8px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.25),0 2px 3px rgba(0,0,0,.4)}
 .toggle{font-size:10px;color:#eee;display:flex;flex-direction:column;gap:3px;align-items:center;background:#161616;border:1px solid #3d3d3d;border-radius:9px;padding:5px 9px;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
@@ -67,7 +67,8 @@ body{margin:0;padding:0;background:#26130a url("data:image/svg+xml;utf8,<svg xml
 .modal .box{background:#1a1c29;border:2px solid #c9a227;border-radius:14px;padding:20px;width:85%;max-width:320px;text-align:center}
 .btn{padding:9px 16px;background:#e67e22;color:#fff;border:none;border-radius:7px;cursor:pointer;font-family:Tahoma;font-weight:bold;margin:4px}
 .btn-green{background:#27ae60}
-#status-msg{position:absolute;top:8px;left:50%;transform:translateX(-50%);font-size:13px;color:#ffd700;background:rgba(0,0,0,.5);padding:4px 12px;border-radius:12px;z-index:40}
+#status-msg{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:12px;color:#ffd700;background:rgba(0,0,0,.55);padding:4px 12px;border-radius:12px;z-index:40;white-space:nowrap}
+#table-bar{position:absolute;top:6px;left:50%;transform:translateX(-50%);z-index:40;background:linear-gradient(#a1663a,#7a4526);border:2px solid #4e2c17;border-radius:12px;padding:4px 14px;font-size:12px;font-weight:bold;color:#ffe0b2;box-shadow:0 3px 8px rgba(0,0,0,.5);white-space:nowrap}
 
 /* ===== تالار بازی (لابی) ===== */
 #lobby{position:absolute;inset:0;z-index:300;background:#7a3520 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><g fill='none' stroke='%235d2413' stroke-width='3' opacity='.55'><circle cx='110' cy='110' r='34'/><path d='M110 40 q26 26 0 52 q-26 -26 0 -52'/><path d='M110 180 q26 -26 0 -52 q-26 26 0 52'/><path d='M40 110 q26 26 52 0 q-26 -26 -52 0'/><path d='M180 110 q-26 26 -52 0 q26 -26 52 0'/><circle cx='30' cy='30' r='12'/><circle cx='190' cy='190' r='12'/><circle cx='190' cy='30' r='12'/><circle cx='30' cy='190' r='12'/></g></svg>") repeat;background-size:220px 220px;color:#fff;font-family:Tahoma;overflow:hidden}
@@ -146,18 +147,17 @@ input.lv-name{background:linear-gradient(#d7ccc8,#a1887f);color:#3e2723;border:2
 </div>
 
 <div id="my-id-display" style="display:none"></div>
+<div id="table-bar" style="display:none"></div>
 <div id="status-msg">در حال اتصال...</div>
 
 <div id="game">
     <!-- پنل من -->
     <div class="panel me">
-        <div class="pname" id="me-name">من</div>
-        <div class="score" id="me-score">۰</div>
         <div class="dice-row"><div class="dbox" id="md1"></div><div class="dbox" id="md2"></div></div>
-        <div class="avatar" id="av-me">؟<span class="flag">🇮🇷</span></div>
+        <div class="pname" id="me-name">من</div>
+        <div class="avatar" id="av-me">؟<span class="flag" id="me-lvl">۱۳</span></div>
         <div class="offcount" id="me-off">خارج: ۰</div>
-        <label class="toggle"><input type="checkbox" id="auto-roll">تاس خودکار</label>
-    </div>
+            </div>
 
     <!-- تخته -->
     <div id="board-frame">
@@ -170,24 +170,14 @@ input.lv-name{background:linear-gradient(#d7ccc8,#a1887f);color:#3e2723;border:2
 
     <!-- پنل حریف -->
     <div class="panel opp">
-        <div class="pname" id="opp-name">حریف</div>
-        <div class="score" id="opp-score">۰</div>
         <div class="dice-row"><div class="dbox" id="od1"></div><div class="dbox" id="od2"></div></div>
-        <div class="avatar" id="av-opp">؟<span class="flag">🇮🇷</span></div>
+        <div class="pname" id="opp-name">حریف</div>
+        <div class="avatar" id="av-opp">؟<span class="flag" id="opp-lvl">۱۳</span></div>
         <div class="offcount" id="opp-off">خارج: ۰</div>
     </div>
 </div>
 
-<button class="gold-btn" id="undo-btn" onclick="undoMove()">↩</button>
-<button class="gold-btn" id="chat-btn" onclick="toggleChat()">💬</button>
 
-<div id="chat-panel">
-    <button onclick="sendChat('سلام 👋')">سلام 👋</button>
-    <button onclick="sendChat('دستت درد نکنه 🙌')">دستت درد نکنه 🙌</button>
-    <button onclick="sendChat('حیف شد 😅')">حیف شد 😅</button>
-    <button onclick="sendChat('آفرین 👏')">آفرین 👏</button>
-    <button onclick="sendChat('بخت باهات یار بود 🎲')">بخت باهات یار بود 🎲</button>
-</div>
 
 <div id="toast"></div>
 
@@ -211,6 +201,7 @@ let peer=(typeof Peer!=="undefined")?new Peer():null,conn=null,myColor=null,myId
 if(!peer)setStatus("⚠️ کتابخانهٔ اتصال بارگذاری نشد");
 let opp={name:"حریف",avatar:"👤"};
 let scores={w:0,b:0};
+let myLevel=13, coins=5000000, gems=10, curTable=0;
 let gameState='CONNECTING'; // CONNECTING, OPENING, PLAYING, GAMEOVER
 let openingDice={w:null,b:null};
 let board=Array(24).fill(null).map(()=>({color:null,count:0}));
@@ -224,19 +215,19 @@ let autoRolling=false;
 if(peer)peer.on('open',id=>{myId=id;document.getElementById('my-id-display').innerText="کد شما: "+id;setStatus("کد خود را برای حریف بفرستید");});
 function copyId(){navigator.clipboard.writeText(myId);alert("کد کپی شد! برای حریفت بفرست");}
 
-if(peer)peer.on('connection',c=>{conn=c;myColor='w';setupConn();conn.on('open',()=>conn.send({type:'INIT',name:myName,avatar:myAvatar}));});
+if(peer)peer.on('connection',c=>{conn=c;myColor='w';setupConn();conn.on('open',()=>conn.send({type:'INIT',name:myName,avatar:myAvatar,lvl:myLevel}));});
 function connectToFriend(){
     if(!peer)return;
     let fid=document.getElementById('peer-id-input').value.trim();
     if(!fid)return alert("کد حریف را وارد کنید");
     conn=peer.connect(fid);myColor='b';setupConn();
-    conn.on('open',()=>conn.send({type:'INIT',name:myName,avatar:myAvatar}));
+    conn.on('open',()=>conn.send({type:'INIT',name:myName,avatar:myAvatar,lvl:myLevel}));
 }
 
 function setupConn(){
     conn.on('data',data=>{
         if(data.type==='INIT'){
-            opp.name=data.name;opp.avatar=data.avatar;
+            opp.name=data.name;opp.avatar=data.avatar;opp.lvl=data.lvl||13;
             if(document.getElementById('setup-modal'))document.getElementById('setup-modal').style.display='none';
             gameState='OPENING';setStatus("برای شروع، تاس بریزید!");render();
         }
@@ -261,7 +252,7 @@ function sendChat(m){if(conn)conn.send({type:'CHAT',msg:m});showToast("شما: "
 function changeName(){
     myName=prompt("نام جدید:",myName)||myName;
     myAvatar=prompt("ایموجی جدید:",myAvatar)||myAvatar;
-    if(conn)conn.send({type:'INIT',name:myName,avatar:myAvatar});render();
+    if(conn)conn.send({type:'INIT',name:myName,avatar:myAvatar,lvl:myLevel});render();
 }
 
 // چیدمان
@@ -308,7 +299,7 @@ function checkOpening(){
 }
 
 function maybeAutoRoll(){
-    let auto=document.getElementById('auto-roll').checked;
+    let elAR=document.getElementById('auto-roll');let auto=elAR&&elAR.checked;
     if(!auto||autoRolling)return;
     let needRoll=(gameState==='OPENING'&&openingDice[myColor]===null)||(gameState==='PLAYING'&&turn===myColor&&diceMoves.length===0);
     if(needRoll){autoRolling=true;setTimeout(()=>{doRoll();autoRolling=false;},900);}
@@ -452,12 +443,12 @@ function render(){
     document.getElementById('opp-name').innerText=opp.name;
     document.getElementById('av-me').childNodes[0].textContent=myAvatar;
     document.getElementById('av-opp').childNodes[0].textContent=opp.avatar;
-    document.getElementById('me-score').innerText="⭐ "+FA(scores[myColor]||0);
-    document.getElementById('opp-score').innerText="⭐ "+FA(scores[oppColor]||0);
     document.getElementById('me-off').innerText="خارج: "+FA(off[myColor]||0);
     document.getElementById('opp-off').innerText="خارج: "+FA(off[oppColor]||0);
     document.getElementById('av-me').classList.toggle('glow',turn===myColor&&gameState==='PLAYING');
     document.getElementById('av-opp').classList.toggle('glow',turn!==myColor&&gameState==='PLAYING');
+    document.getElementById('me-lvl').innerText=FA(myLevel);
+    document.getElementById('opp-lvl').innerText=FA(opp.lvl||13);
     // تاس‌ها
     let rl=lastRoll&&lastRoll.d;
     let f1=rl?DICE_FACES[lastRoll.d[0]]:'',f2=rl?DICE_FACES[lastRoll.d[1]]:'';
@@ -539,11 +530,11 @@ const TABLES=[
   frame:'linear-gradient(#546e7a,#263238)',
   bg:"#263238 url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='130' height='130'><path d='M82 38 a20 20 0 1 0 16 32 a16 16 0 1 1 -16 -32' fill='%23ffd54f' opacity='.3'/><g stroke='%23ffd54f' stroke-width='2' opacity='.4'><path d='M30 30 h10 M35 25 v10'/><path d='M40 90 h8 M44 86 v8'/><path d='M100 95 h8 M104 91 v8'/></g></svg>) 0 0/130px 130px repeat"}
 ];
-let myLevel=13, coins=5000000, gems=10, curTable=0;
 var themeTriA, themeTriB;
 
 function triURI(c){
-    return "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 200' preserveAspectRatio='none'><g fill='none' stroke='"+c+"'><path stroke-width='3' d='M20 4 L31 34 V150 L20 196 L9 150 V34 Z'/><path stroke-width='2' d='M20 26 L26 44 V140 L20 172 L14 140 V44 Z'/><path stroke-width='2' d='M20 62 L24 76 V120 L20 138 L16 120 V76 Z'/></g><path d='M20 92 l6 10 -6 10 -6 -10 Z' fill='"+c+"'/></svg>\")";
+    const svg="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 200' preserveAspectRatio='none'><g fill='none' stroke='"+c+"'><path stroke-width='3' d='M20 4 L31 34 V150 L20 196 L9 150 V34 Z'/><path stroke-width='2' d='M20 26 L26 44 V140 L20 172 L14 140 V44 Z'/><path stroke-width='2' d='M20 62 L24 76 V120 L20 138 L16 120 V76 Z'/></g><path d='M20 92 l6 10 -6 10 -6 -10 Z' fill='"+c+"'/></svg>";
+    return 'url("data:image/svg+xml,'+encodeURIComponent(svg)+'")';
 }
 
 function motifSVG(m,c){
@@ -607,7 +598,10 @@ function sidePick(dir){
 }
 function applyTheme(t){
     themeTriA=triURI(t.triA); themeTriB=triURI(t.triB);
-    document.getElementById('board').style.background=t.bg;
+    const b=document.getElementById('board');
+    b.style.backgroundColor=t.bgc;
+    b.style.backgroundImage='url("data:image/svg+xml,'+encodeURIComponent(t.pat)+'")';
+    b.style.backgroundSize='130px 130px';
     document.getElementById('board-frame').style.background=t.frame;
 }
 function enterGame(){
@@ -616,12 +610,12 @@ function enterGame(){
     coins-=t.entry;
     applyTheme(t); render();
     document.getElementById('lobby').style.display='none';
-    setStatus('🏟 میز '+t.name+' — ورودی '+FAm(t.entry)+' | جایزه '+FAm(t.prize));
+    let tb=document.getElementById('table-bar');tb.style.display='block';tb.innerText='🏟 میز '+t.name+'  |  ورودی: '+FAm(t.entry)+' 🪙  |  جایزه: '+FAm(t.prize)+' 🪙';
     renderLobbyTop();
 }
 renderLobby();
 applyTheme(TABLES[curTable]);
 render();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3c85ee9ede89ed7',t:'MTc4OTY1MDgzMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3c88645b99ad0a3',t:'MTc4OTY1MjQ0NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
