@@ -132,10 +132,294 @@ body{background:#291b14}
 @keyframes rollShake{25%{transform:rotate(20deg)}75%{transform:rotate(-20deg)}}
 .rolling .dbox{animation:rollShake .12s infinite}
 
+
+/* Match waiting room */
+#match-screen{position:absolute;inset:0;z-index:350;display:none;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#549cda 0%,#236aa7 48%,#103666 100%);color:#fff;align-items:center;justify-content:center;flex-direction:column;gap:10px}
+#match-screen:before,#match-screen:after{content:'';position:absolute;width:85%;height:65%;border-radius:50%;background:radial-gradient(ellipse,#edf8ff80,transparent 68%);filter:blur(25px);pointer-events:none;animation:cloudDrift 9s ease-in-out infinite alternate}
+#match-screen:before{left:-30%;top:-15%}#match-screen:after{right:-30%;bottom:-20%;animation-delay:-4s}
+@keyframes cloudDrift{to{transform:translate(15%,12%)}}
+.match-art{position:relative;width:260px;height:160px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#match-board{transform:rotate(-8deg);opacity:.65;filter:blur(1px);box-shadow:0 18px 45px #05214860}
+.match-fog{position:absolute;inset:-20px;background:radial-gradient(ellipse,#e8f6ffc9 0%,#deefff70 40%,transparent 72%);filter:blur(10px)}
+.magnifier-orbit{position:absolute;inset:30px 80px;animation:searchOrbit 2s linear infinite;display:flex;align-items:center;justify-content:center}
+.magnifier-orbit svg{width:76px;height:76px;filter:drop-shadow(0 5px 7px #11366288)}
+@keyframes searchOrbit{from{transform:rotate(0deg) translateX(15px) rotate(0deg)}to{transform:rotate(360deg) translateX(15px) rotate(-360deg)}}
+.match-title{font-size:19px;font-weight:bold;z-index:1}.match-sub{font-size:12px;color:#d6ebff;z-index:1}
+#match-count{font-size:13px;color:#fff;z-index:1}
+.match-progress{height:5px;width:210px;background:#ffffff30;border-radius:5px;overflow:hidden;z-index:1;direction:ltr}
+#match-progress-fill{height:100%;width:0;background:#d3efff;border-radius:5px;transition:width .2s linear}
+.match-back{position:absolute;left:10px;top:10px;z-index:3}
+@media(max-height:420px){#match-screen{gap:6px}.match-art{height:140px}.match-title{font-size:16px}}
+
+/* City materials: board surface is intentionally quiet and legible. */
+#rotator[data-city]{background:radial-gradient(ellipse at 50% 35%,var(--city-frame),var(--city-back) 80%)}
+#rotator[data-city] #board-frame{background:linear-gradient(115deg,var(--city-edge),var(--city-frame) 12%,var(--city-frame) 88%,var(--city-edge))!important;border:2px solid var(--city-edge);padding:9px;box-shadow:0 12px 30px #0007,inset 0 0 0 2px #0004,inset 0 0 0 4px var(--city-frame);border-radius:10px}
+#rotator[data-city] #board{background:repeating-linear-gradient(2deg,transparent 0 8px,#ffffff06 9px,transparent 10px 19px),linear-gradient(100deg,#ffffff12,transparent 35%,#00000008),var(--city-base)!important;border-radius:3px;box-shadow:inset 0 0 14px #0003}
+#rotator[data-city] .tri.a{background:linear-gradient(90deg,#ffffff12,transparent 55%,#00000015),var(--city-dark)!important}
+#rotator[data-city] .tri.b{background:linear-gradient(90deg,#ffffff20,transparent 55%,#00000012),var(--city-light)!important}
+#rotator[data-city] .bar{background:var(--city-decor) center/100% 100% no-repeat,linear-gradient(90deg,#0003,transparent 45%,#ffffff15),var(--city-frame)!important;border-left:var(--city-inlay) solid var(--city-edge);border-right:var(--city-inlay) solid var(--city-edge);box-shadow:2px 0 5px #0004,-2px 0 5px #0004}
+#rotator[data-city] .tray{background:linear-gradient(90deg,#0004,transparent,#0003),var(--city-tray)!important;border:1px solid var(--city-edge);width:7%;margin:0 2px;box-shadow:inset 0 2px 10px #0007}
+#rotator[data-city] .checker.w{background:radial-gradient(circle at 32% 24%,#fff,var(--city-white) 40%,#baa888);border:1px solid #c4b497;box-shadow:0 2px 3px #0008,inset 0 2px 2px #fff8,inset 0 -2px 2px #0002}
+#rotator[data-city] .checker.b{background:radial-gradient(circle at 32% 24%,#68737b,var(--city-black) 53%,#080e14);border:1px solid #101b21;box-shadow:0 2px 3px #0009,inset 0 2px 2px #ffffff40,inset 0 -2px 2px #0008}
+#rotator[data-city] .checker:after{position:absolute;border:1px solid #95857260;width:70%;height:70%;box-shadow:inset 0 1px 2px #0002}
+#rotator[data-city="3"] .checker:after,#rotator[data-city="4"] .checker:after{border-color:#c7a56699;box-shadow:0 0 0 2px #00000010,inset 0 1px 2px #0002}
+#rotator[data-city="2"] #board-frame,#rotator[data-city="3"] #board-frame,#rotator[data-city="4"] #board-frame{outline:1px solid var(--city-accent);outline-offset:-6px;padding:11px}
+#rotator[data-city="4"] #board-frame{box-shadow:0 16px 40px #000a,0 0 24px #cda65b18,inset 0 0 0 3px #07131f}
+#rotator[data-city] #table-bar{background:var(--city-tray);border:1px solid var(--city-edge);color:var(--city-accent);font-weight:normal}
+#rotator[data-city] .gold-btn{background:linear-gradient(135deg,var(--city-light),var(--city-edge));border-color:var(--city-frame);color:var(--city-tray)}
+#rotator[data-city] #roll-overlay button{background:linear-gradient(135deg,var(--city-frame),var(--city-tray));border:1px solid var(--city-accent);color:#fff8e6;box-shadow:0 5px 14px #0006}
+#rotator[data-city] .avatar{background:radial-gradient(circle at 50% 30%,var(--city-frame),var(--city-tray));border-color:var(--city-edge)}
+#rotator[data-city] .tray.valid-bear{outline:3px solid #a9eb74;background:#427237!important}
+#rotator[data-city] .point.selected{outline:2px solid #ffe39c}
+#rotator[data-city] .point.valid-move{outline:2px solid #84df84;background:#75d67233}
+#rotator[data-city] #lobby{background:radial-gradient(ellipse at 50% 40%,#ffffff12,transparent 65%),repeating-linear-gradient(45deg,transparent 0 70px,#ffffff03 71px 72px),var(--city-back)}
+#rotator[data-city] .lv-pedestal{background:radial-gradient(ellipse at 50% 30%,var(--city-edge),var(--city-frame) 65%,var(--city-tray));box-shadow:0 0 35px 8px #ffffff15,inset 0 4px 7px #ffffff30}
+.city-tier{font-size:10px;border:1px solid var(--city-edge);color:var(--city-accent);border-radius:12px;padding:3px 8px;margin-right:6px;vertical-align:middle;font-weight:normal}
+#city-material{font-size:10px;color:var(--city-accent);letter-spacing:.4px}
+.lv-center{gap:4px}.lv-boardwrap{filter:drop-shadow(0 10px 16px #0006)}
+#rotator[data-city] .entry-pill{background:var(--city-frame);border-color:var(--city-edge);color:var(--city-accent);animation:none}
+@media(max-height:420px){.lv-boardwrap svg{height:118px;width:184px}.lv-pedestal{height:35px;width:210px}.lv-title{font-size:14px}#city-material{font-size:9px}.entry-pill{padding:4px 12px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* Clear landing strip, without changing city frames or board materials. */
+#board .point{height:35%}
+#table-dice{position:absolute;left:73%;top:50%;transform:translate(-50%,-50%);display:none;gap:11px;direction:ltr;align-items:center;pointer-events:none;z-index:12}
+#table-dice.opponent-dice{left:25%}
+.table-die{position:relative;width:clamp(25px,4vw,38px);height:clamp(25px,4vw,38px);border-radius:7px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:5px;gap:2px;background:linear-gradient(140deg,#fffef9,#f5ead0 70%,#d0b98e);border:1px solid #b29b73;box-shadow:2px 4px 0 #9c855d,4px 8px 8px #0006,inset 1px 1px 2px #fff;transform:rotate(-9deg)}
+.table-die:nth-child(2){transform:translateY(5px) rotate(12deg)}
+.table-die .pip{border-radius:50%;background:radial-gradient(circle at 40% 30%,#453d32,#100e0a);visibility:hidden;box-shadow:inset 0 1px 1px #0008}
+.table-die .pip.on{visibility:visible}
+#table-dice.tossing .table-die{animation:dieTumble .68s both cubic-bezier(.22,.65,.3,1)}
+#table-dice.tossing .table-die:nth-child(2){animation-name:dieTumbleTwo;animation-delay:.035s}
+@keyframes dieTumble{0%{transform:translate(65px,-50px) rotate(190deg) scale(1.15);opacity:0}15%{opacity:1}45%{transform:translate(15px,6px) rotate(55deg)}65%{transform:translate(5px,-14px) rotate(15deg)}84%{transform:translate(0,2px) rotate(-15deg)}100%{transform:rotate(-9deg)}}
+@keyframes dieTumbleTwo{0%{transform:translate(80px,-45px) rotate(-210deg) scale(1.2);opacity:0}15%{opacity:1}45%{transform:translate(20px,10px) rotate(-65deg)}65%{transform:translate(8px,-10px) rotate(-15deg)}84%{transform:translate(1px,7px) rotate(18deg)}100%{transform:translateY(5px) rotate(12deg)}}
+#turn-actions{width:100%;display:none;flex-direction:column;gap:6px;align-items:center;margin-top:6px;z-index:25}
+.turn-action{position:relative;width:100%;max-width:108px;min-height:34px;border-radius:5px;border:1px solid #efcf8c;color:#fff;font-family:Tahoma;font-size:12px;font-weight:bold;cursor:pointer;text-shadow:0 1px 2px #0008;box-shadow:0 2px 4px #0006;overflow:visible}
+#step-back{background:linear-gradient(#bd4438,#791f1a)}
+#commit-turn{background:linear-gradient(#63b944,#28752b);display:none;isolation:isolate}
+#commit-turn svg{position:absolute;inset:-4px;width:calc(100% + 8px);height:calc(100% + 8px);overflow:visible;pointer-events:none}
+#commit-turn rect{fill:none;stroke:#ffe8a3;stroke-width:3;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:0;filter:drop-shadow(0 0 2px #d18e24)}
+#confirm-seconds{display:inline-block;min-width:10px;font-size:10px;margin-right:4px;color:#fff4c8}
+.panel.me{position:relative}
+@media(max-height:380px){#turn-actions{gap:4px;margin-top:2px}.turn-action{min-height:27px;font-size:11px}.panel.me{gap:4px}.panel.me .avatar{width:48px;height:48px;font-size:25px}}
+
+/* Roll button on the player's half, never over the bar. */
+#board #roll-overlay{left:73%;top:50%;white-space:nowrap}
+#board #roll-overlay button{font-size:13px;padding:9px 16px}
+.turn-clock{position:absolute;left:-9px;bottom:-6px;width:29px;height:29px;border-radius:50%;background:#12231deb;box-shadow:0 1px 5px #0007;z-index:5;pointer-events:none;display:none}
+.turn-clock svg{width:100%;height:100%;transform:rotate(-90deg)}
+.turn-clock circle{fill:none;stroke-width:3}
+.turn-clock .clock-track{stroke:#ffffff23}
+.turn-clock .clock-progress{stroke:#72e791;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:0}
+.turn-clock.urgent .clock-progress{stroke:#ffbd61}
+/* Fixed glass lounge palette, independent of selected city. */
+#rotator[data-city] #lobby{isolation:isolate;background:radial-gradient(ellipse at 17% 8%,#799c9950,transparent 48%),radial-gradient(ellipse at 88% 86%,#ba945c22,transparent 50%),linear-gradient(135deg,#142f32,#122326 55%,#0c191d)!important}
+#lobby:before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:repeating-linear-gradient(125deg,transparent 0 100px,#ffffff03 101px 102px)}
+#lobby:after{content:'';position:absolute;inset:9px;border-radius:20px;border:1px solid #cce8e319;box-shadow:inset 0 1px 0 #ffffff0c;pointer-events:none;z-index:-1}
+#lobby .lv-center{padding:9px 24px 12px;border-radius:20px;background:linear-gradient(145deg,#e2f7f012,#b8ddd705);border:1px solid #d3eee32d;box-shadow:0 12px 32px #0003,inset 0 1px 0 #ffffff20;backdrop-filter:blur(14px)}
+#rotator[data-city] #lobby .lv-pedestal{background:radial-gradient(ellipse at 50% 25%,#a1b4a9,#506762 65%,#293d39)!important;box-shadow:0 0 26px #cce9df18,inset 0 3px 6px #ffffff35}
+#rotator[data-city] #lobby .entry-pill{background:linear-gradient(135deg,#355954cc,#243d3bdd);border:1px solid #c4b17b88;color:#f4e7c6;box-shadow:0 4px 12px #0004}
+#lobby .lv-smallbtn{background:linear-gradient(145deg,#58716b99,#283f3bd9);border:1px solid #b0c8bb66;color:#f1ead5;box-shadow:0 3px 10px #0004;backdrop-filter:blur(8px)}
+#lobby .cur-pill,#lobby input.lv-name{background:linear-gradient(140deg,#d6e9df30,#8cafa41a);border:1px solid #afcbb74d;color:#f4e8ca;backdrop-filter:blur(8px)}
+@media(max-height:420px){#lobby .lv-center{padding:5px 16px 8px;border-radius:14px}}
+
+/* Remaining dice: the halo is outside the face so pips remain legible. */
+.table-die:after{content:'';position:absolute;inset:-6px;border:1.4px solid #ffdf68;border-radius:50%;box-shadow:0 0 5px #ffe68155;opacity:0;transition:opacity .18s ease;pointer-events:none}
+.table-die.die-available:after{opacity:1}
+.dbox{transition:opacity .2s ease,filter .2s ease}.dbox.die-spent{opacity:.27;filter:grayscale(1)}
+.die-remaining{position:absolute;right:-5px;bottom:-6px;min-width:14px;height:14px;line-height:14px;border-radius:8px;background:#54451c;color:#ffe690;font:9px/14px Tahoma;text-align:center;border:1px solid #ffe690;z-index:2;display:none}
+.lounge-page{position:absolute;inset:0;z-index:380;display:none;flex-direction:column;direction:rtl;color:#f3f2e9;background:radial-gradient(ellipse at 10% 0%,#547e6c35,transparent 55%),linear-gradient(130deg,#193331,#0e1f24);text-align:right}
+.lounge-head{display:flex;align-items:center;gap:13px;min-height:64px;padding:10px 22px;border-bottom:1px solid #d9efde20;background:#ffffff04;flex-shrink:0}
+.lounge-head .back-page{margin-right:auto;border:1px solid #cfe1d438;border-radius:11px;width:34px;height:34px;background:#ffffff0b;color:#efe4c6;font-size:22px;cursor:pointer}
+.lounge-title{font-size:19px;font-weight:bold;margin:0}.lounge-subtitle{font-size:10px;color:#aec4bd;margin-top:4px}.page-label{font-size:9px;letter-spacing:1.5px;color:#d3b97e;direction:ltr}
+.page-scroller{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch;padding:16px 22px 24px;scrollbar-width:thin;scrollbar-color:#7f9784 #ffffff08}
+.shop-intro{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px;padding:11px 15px;background:linear-gradient(110deg,#e1bd6820,#ffffff05);border:1px solid #d4c38b25;border-radius:12px}
+.shop-intro strong{font-size:13px}.shop-intro p{font-size:10px;color:#c2cec7;margin:5px 0 0}.shop-count{color:#d4bc84;border:1px solid #d4bc8444;padding:5px 10px;border-radius:18px;font-size:10px;white-space:nowrap}
+.dice-catalog{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:12px;max-width:1120px;margin:auto}
+.dice-card{position:relative;min-width:0;border:1px solid #ffffff16;border-radius:14px;overflow:hidden;background:linear-gradient(145deg,#ffffff0b,#ffffff03);box-shadow:0 4px 12px #0002;text-align:center;padding:10px 8px 12px}
+.dice-card.luxury{border-color:#e1c2764d;background:linear-gradient(150deg,#d5b2520c,#ffffff05)}
+.dice-number{position:absolute;right:9px;top:8px;font-size:9px;color:#a2b6b0}.dice-tier{font-size:8px;color:#cdbd91;position:absolute;top:8px;left:9px}
+.dice-display{height:91px;display:flex;align-items:center;justify-content:center;position:relative;margin-top:5px}
+.dice-display:before{content:'';position:absolute;width:88px;height:30px;bottom:6px;border-radius:50%;background:radial-gradient(ellipse,var(--glow,#ffffff17),transparent 70%);filter:blur(7px)}
+.catalog-die{position:relative;width:52px;height:52px;border-radius:12px;transform:rotate(-12deg);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:10px;gap:4px;background:var(--face);border:1px solid var(--rim);box-shadow:3px 5px 0 var(--side),5px 10px 12px #0006,inset 1px 2px 4px #ffffff65,inset -2px -2px 4px #0002;color:var(--pip);isolation:isolate}
+.catalog-die:before{content:'';position:absolute;inset:3px;border-radius:9px;border:1px solid #ffffff18;pointer-events:none}
+.catalog-die i{border-radius:50%;background:var(--pip);box-shadow:inset 0 1px 2px #0004,0 1px 0 #ffffff30;z-index:1;visibility:hidden}.catalog-die i.on{visibility:visible}
+.dice-card h3{font-size:12px;font-weight:normal;margin:2px 0 4px;color:#f5f0dc}.dice-desc{font-size:9px;color:#a8bcb5;height:15px;white-space:nowrap}
+.dice-price{margin-top:9px;padding-top:8px;border-top:1px solid #ffffff0e;color:#e6d29c;font-size:12px;font-weight:bold}.dice-price small{font-size:9px;font-weight:normal;color:#aebdb3}
+.catalog-die.glass{box-shadow:3px 5px 0 var(--side),5px 10px 12px #0006,inset 0 0 12px #ffffff70,0 0 16px var(--glow)}
+.catalog-die.glass:before{background:linear-gradient(130deg,#ffffff65,transparent 35%,#ffffff09 55%,#ffffff35);border-color:#ffffff70}
+.catalog-die.snow:after{content:'❄';position:absolute;right:1px;top:-8px;color:#fff;font-size:26px;text-shadow:0 0 6px #c8f4ff;z-index:2;opacity:.8}
+.catalog-die.fire:before{background:repeating-conic-gradient(from 15deg at 50% 115%,transparent 0deg 17deg,#fff18455 20deg 24deg,transparent 28deg 34deg);border-color:#ffdc7366}
+.catalog-die.cosmic:before{background:radial-gradient(circle at 12% 20%,#fff 0 1px,transparent 2px),radial-gradient(circle at 80% 40%,#d8dcff 0 1px,transparent 2px),radial-gradient(circle at 40% 80%,#fff 0 1px,transparent 2px);border-color:#deb4ff77}
+.catalog-die.royal:before{border:1px solid #fff2b8;box-shadow:0 0 0 2px #a8832944,inset 0 0 4px #e6bb4e55}
+.shop-footnote{font-size:10px;color:#8fa8a0;text-align:center;margin:18px 0 0}
+.friends-body{width:100%;max-width:690px;margin:0 auto;display:flex;flex-direction:column;min-height:100%;gap:14px}
+.friend-search{display:flex;align-items:center;gap:9px;border:1px solid #bdcfc338;border-radius:10px;background:#ffffff08;padding:0 12px;min-height:37px;color:#afc5bb;flex-shrink:0}
+.friend-search svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;flex-shrink:0}.friend-search input{width:100%;height:35px;border:0;outline:0;background:transparent;color:#eff5e9;font:11px Tahoma;user-select:text;direction:rtl}.friend-search input::placeholder{color:#9eb7ad}.friend-search:focus-within{border-color:#d7c18499}
+.friends-list{min-height:168px;flex:1;border:1px solid #ffffff16;border-radius:15px;background:#ffffff04;display:flex;flex-direction:column}
+.friends-list-head{font-size:11px;color:#cbdace;padding:13px 15px;border-bottom:1px solid #ffffff0c;display:flex;justify-content:space-between}.friends-list-head span{font-size:10px;color:#95aea2}
+.friends-empty{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px;gap:9px;color:#c3d2c9;text-align:center}.friends-empty svg{width:40px;height:40px;stroke:#b0c4b677;fill:none;stroke-width:1.3}.friends-empty strong{font-size:12px;font-weight:normal}.friends-empty p{font-size:10px;color:#8fa99e;margin:0}
+@media(max-height:420px){.lounge-head{min-height:54px;padding:8px 16px}.lounge-title{font-size:16px}.page-scroller{padding:12px 16px 20px}.shop-intro{margin-bottom:10px;padding:8px 12px}.dice-catalog{gap:10px}.dice-display{height:78px}.dice-card{padding-bottom:9px}}
+
+/* Reserve independent lanes for player header, city selection and footer. */
+#lobby{container-type:size}
+#lobby .topbar{top:10px;left:14px;right:14px;height:64px;z-index:10}
+#lobby #lv-stage{top:82px;bottom:70px;gap:4%;align-items:center}
+#lobby .lv-center{box-sizing:border-box;gap:3px;padding:8px 20px 10px;max-height:100%;flex-shrink:0}
+#lobby .lv-boardwrap svg{display:block;width:auto;height:clamp(65px,27cqh,145px)}
+#lobby .lv-pedestal{width:190px;height:24px;min-height:24px;margin-top:-13px}
+#lobby .lv-title{font-size:14px;line-height:22px}
+#lobby #city-material{font-size:9px;line-height:12px}
+#lobby .entry-pill{padding:5px 10px;font-size:11px;line-height:16px}
+#lobby #lv-bottom{bottom:12px;height:46px;padding:0 14px;z-index:10}
+#lobby .lv-smallbtn{padding:5px 15px;font-size:12px;min-width:85px}
+#lobby .lv-smallbtn .ic{font-size:21px}
+#lobby .lv-side{height:70%;max-height:170px}
+#lobby .lv-lottery{top:auto;bottom:83px;right:12px}
+@container(max-height:330px){
+ #lobby .topbar{height:52px;top:8px}#lobby .lv-avatar{width:48px;height:48px;font-size:25px}
+ #lobby #lv-stage{top:65px;bottom:59px}#lobby .lv-center{padding:4px 14px 6px;gap:2px}
+ #lobby .lv-boardwrap svg{height:23cqh}#lobby .lv-pedestal{height:16px;min-height:16px;margin-top:-10px}
+ #lobby .lv-title{font-size:12px;line-height:18px}#lobby #lv-bottom{height:39px;bottom:9px}
+ #lobby .lv-lottery{bottom:65px}#lobby .lottery-icon{width:44px;height:44px;font-size:23px}
+}
+/* Lottery: original emerald observatory visual, not the reference's blue/gold form. */
+#daily-lottery{background:radial-gradient(ellipse at 0% 5%,#356a5c66,transparent 60%),linear-gradient(130deg,#132b30,#0b1825)}
+.lottery-layout{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:14px;align-items:start}
+.lottery-card{border:1px solid #d5e5dc22;background:linear-gradient(145deg,#ffffff0b,#ffffff03);border-radius:17px;overflow:hidden;padding:16px;box-shadow:0 6px 20px #0002}
+.lottery-hero{position:relative;background:radial-gradient(ellipse at 80% 5%,#c6aa6222,transparent 70%),linear-gradient(140deg,#274840bb,#1c3036cc)}
+.lottery-eyebrow{font-size:9px;letter-spacing:2px;color:#bfa875;direction:ltr;text-align:right}
+.lottery-hero h3{font-size:23px;font-weight:normal;margin:9px 0 5px;color:#f2e3bd}
+.lottery-hero p{font-size:10px;color:#b2c7bf;line-height:1.8;margin:0}
+.lottery-clock{display:flex;direction:ltr;justify-content:center;align-items:center;gap:8px;margin:15px 0 10px}
+.lottery-clock div{flex:1;text-align:center;padding:9px 4px;background:#0a1f2466;border:1px solid #bad8c51c;border-radius:12px}
+.lottery-clock b{font-size:29px;line-height:1.1;font-family:monospace;font-weight:normal;color:#e5eadc}
+.lottery-clock small{display:block;font-size:9px;color:#87a99d;margin-top:5px}
+.lottery-clock em{font-size:20px;font-style:normal;color:#83988a}
+.lottery-notice{font-size:10px;color:#c8bb98;padding:8px 10px;border:1px dashed #b8a57755;border-radius:8px;line-height:1.7}
+.lottery-section-title{font-size:12px;color:#e5e8db;margin:0 0 12px;font-weight:normal;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.lottery-section-title span{font-size:9px;color:#8fada0}
+.lottery-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+.lottery-slot{text-align:center;padding:12px 5px;background:#ffffff05;border:1px solid #c7d9ce1c;border-radius:12px}
+.slot-seal{width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;transform:rotate(45deg);border-radius:10px;border:1px solid #c6ac6b;background:linear-gradient(135deg,#c8b17130,#172b31);box-shadow:0 0 0 4px #d7c89909}
+.slot-seal span{transform:rotate(-45deg);color:#dcc791;font-size:17px}
+.lottery-slot h4{font-size:10px;font-weight:normal;color:#d2dfd5;margin:5px 0}.lottery-slot small{font-size:9px;color:#839d90}
+.lottery-register{display:block;margin:8px auto 0;padding:5px 8px;width:100%;border-radius:7px;background:#56675933;border:1px solid #839e7f33;color:#98ad9c;font-family:Tahoma;font-size:10px;cursor:not-allowed}
+.lottery-side{display:flex;flex-direction:column;gap:14px}
+.lottery-entry-price{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:11px;color:#b9cec3;padding-bottom:12px;border-bottom:1px solid #ffffff0d}
+.lottery-entry-price b{font-size:15px;font-weight:normal;color:#e6cc94}.lottery-entry-price small{font-size:9px;color:#a3b1a5}
+.lottery-ticket-number{display:flex;justify-content:space-between;align-items:center;padding:13px 0;font-size:10px;color:#b1c8bb}
+.lottery-ticket-number strong{font:18px monospace;color:#e6dec0;letter-spacing:4px;border:1px solid #c5b27944;border-radius:8px;background:#0c222866;padding:6px 12px}
+.lottery-totals{margin:0;display:grid;grid-template-columns:1fr auto;gap:11px;font-size:10px;color:#9fb9aa;border-top:1px solid #ffffff0d;padding-top:12px}
+.lottery-totals dt,.lottery-totals dd{margin:0}.lottery-totals dd{color:#e0e6d4}.lottery-totals .total-reward{color:#e5cc8e}
+.lottery-tickets{display:flex;gap:7px;direction:ltr;margin:14px 0 0}.lottery-tickets span{flex:1;display:flex;justify-content:center;align-items:center;height:38px;border:1px dashed #9eb29d55;border-radius:9px;color:#9db4a5;font:20px monospace;background:#18333766}
+.lottery-history{grid-column:1/-1}.lottery-history-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;list-style:none;margin:0;padding:0}
+.lottery-history-list li{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid #d1decb16;background:#0e242866;border-radius:10px}
+.lottery-history-list .place{width:26px;height:26px;border:1px solid #cbb6784d;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#cbb678;flex-shrink:0}
+.lottery-history-list strong{font-size:10px;color:#bfcec1;font-weight:normal}.lottery-history-list small{display:block;font-size:9px;color:#79988a;margin-top:5px}
+@media(max-width:600px){.lottery-layout{grid-template-columns:1fr}.lottery-history-list{grid-template-columns:1fr}}
+@media(max-height:420px){.lottery-card{padding:12px}.lottery-hero h3{font-size:20px}.lottery-clock{margin:12px 0 9px}.lottery-clock b{font-size:25px}}
+
+
+/* Simplified daily lottery: one clear reading order. */
+#daily-lottery .lounge-head{min-height:52px;padding:9px 18px}
+#daily-lottery .lounge-title{font-size:17px}
+#daily-lottery .page-scroller{padding:14px 18px 22px}
+.simple-lottery{width:100%;max-width:480px;margin:0 auto;text-align:center}
+.simple-registers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
+.simple-registers button{width:100%;border:1px solid #ddc28a;border-radius:14px;background:linear-gradient(#dfca97,#b6985c);color:#293a32;font: bold 18px Tahoma;padding:9px;box-shadow:inset 0 1px 0 #fff8;cursor:not-allowed;opacity:1}
+.simple-slot{height:64px;width:64px;margin:15px auto 0;border:2px solid #d2bb7f;border-radius:50%;background:#ffffff05;box-shadow:inset 0 0 0 4px #132b2b, inset 0 0 0 5px #c9b78355}
+.simple-price{padding:10px 6px;background:#ffffff0b;border-radius:10px;font-size:13px;color:#dde8dc}
+.simple-price strong{font-size:20px;color:#efd49a;display:inline-block;margin:0 12px}
+.simple-time{direction:ltr;font:44px/1.5 Tahoma;color:#f7f2e3;letter-spacing:3px;margin:9px 0 11px}
+.simple-ready{display:flex;justify-content:space-between;align-items:center;font-size:14px;margin:0 0 20px}
+.simple-ready b{background:#d3ba80;color:#273f36;border:1px solid #ecdcac;border-radius:14px;min-width:102px;padding:6px 20px;font-size:28px;font-weight:normal}
+.simple-totals{display:grid;grid-template-columns:1fr 70px;text-align:right;gap:9px;margin:0 0 21px;font-size:13px;color:#e4eadf}
+.simple-totals dt,.simple-totals dd{margin:0}.simple-totals dd{text-align:center;font-size:15px}
+.simple-digits{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;direction:ltr}
+.simple-digits span{border:1px solid #9eccc0;background:linear-gradient(#386c60,#1c3939);border-radius:13px;font-size:35px;padding:5px;color:#f3f4df}
+.simple-history-title{font-size:14px;font-weight:normal;margin:22px 0 10px}
+.simple-reward{display:flex;justify-content:space-between;font-size:12px;margin:0 0 9px;color:#cbdacc}
+.simple-winners{display:flex;flex-direction:column;gap:7px}
+.simple-winners>div{display:flex;justify-content:space-between;align-items:center;background:#c4ae7733;border:1px solid #cdb98055;border-radius:9px;padding:8px 13px;color:#e8dbb5;font-size:13px}
+.simple-winners b{font-size:19px;font-weight:normal;color:#eed197;min-width:55px}
+.simple-inactive{font-size:10px;color:#a2b6a7;margin:17px 0 0}
+
+.dice-buy{margin-top:9px;width:100%;min-height:30px;border:1px solid #d9c18377;border-radius:8px;background:linear-gradient(#59694e,#354936);color:#f4e6bd;font:10px Tahoma;cursor:pointer}.dice-buy.equipped{background:#3a756048;border-color:#a0d4b677;color:#c9f1d5}.dice-card.is-equipped{outline:2px solid #c4d398;outline-offset:-2px}
+.demo-tag{display:inline-block;font-size:9px;padding:4px 8px;border:1px solid #e5c36c55;border-radius:7px;background:#e4bd5712;color:#e9cb88}
+#demo-checkout{position:absolute;inset:0;z-index:490;display:none;align-items:center;justify-content:center;background:#031312d9;backdrop-filter:blur(8px);padding:14px;direction:rtl}
+.checkout-box{background:linear-gradient(135deg,#27443c,#162c30);border:1px solid #d7c28a66;border-radius:19px;padding:20px;width:100%;max-width:380px;max-height:100%;overflow:auto;text-align:right;box-shadow:0 18px 60px #0007;color:#e6eedf;touch-action:pan-x pan-y}
+.checkout-box h2{font:18px Tahoma;margin:12px 0}.checkout-box p{font-size:11px;line-height:1.9;color:#b5c9bb;margin:8px 0}
+.checkout-summary{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;margin:7px 0;border-block:1px solid #ffffff18;font-size:12px}.checkout-summary strong{color:#f4d59c;white-space:nowrap;font-weight:normal}
+.checkout-actions{display:flex;gap:8px;margin-top:14px}.checkout-actions button{flex:1;border:1px solid #b9cbac55;background:#ffffff0a;color:#e4e8d9;border-radius:9px;padding:10px;font:12px Tahoma;cursor:pointer}.checkout-actions .pay-demo{background:#d3bb7d;color:#18372b;border-color:#ebd89e;font-weight:bold}
+.checkout-status{font-size:11px;color:#bae3be;line-height:1.8;min-height:0;margin-top:8px}
+#demo-checkout button:disabled{opacity:.6;cursor:default}
+.table-die.purchased-skin{background:var(--skin-face);border-color:var(--skin-rim);box-shadow:2px 4px 0 var(--skin-side),4px 8px 8px #0006,inset 1px 1px 3px #ffffff70}
+.table-die.purchased-skin .pip{background:var(--skin-pip)}
+.table-die.purchased-skin.skin-glass{box-shadow:2px 4px 0 var(--skin-side),4px 8px 8px #0006,inset 0 0 9px #ffffff70}
+.table-die.purchased-skin.skin-royal:before,.table-die.purchased-skin.skin-glass:before,.table-die.purchased-skin.skin-fire:before,.table-die.purchased-skin.skin-cosmic:before{content:'';position:absolute;inset:3px;border-radius:4px;border:1px solid #ffffff65;pointer-events:none}
+.table-die.purchased-skin.skin-fire:before{background:repeating-conic-gradient(from 15deg at 50% 115%,transparent 0deg 17deg,#fff18455 20deg 24deg,transparent 28deg 34deg)}
+.table-die.purchased-skin.skin-royal:before{border-color:#ffebad}
+.table-die.purchased-skin.skin-cosmic:before{background:radial-gradient(circle at 12% 20%,#fff 0 1px,transparent 2px),radial-gradient(circle at 80% 40%,#ddd 0 1px,transparent 2px)}
+.table-die.purchased-skin.skin-snow:before{content:'❄';position:absolute;right:-1px;top:-7px;color:#fff;font-size:17px;opacity:.75;pointer-events:none}
+.table-die.purchased-skin .pip{position:relative;z-index:1}
+.dbox.purchased-skin{background:var(--skin-face);color:var(--skin-pip);border-color:var(--skin-rim)}
+.simple-registers button{cursor:pointer}.simple-registers button:disabled{cursor:default}.simple-slot.has-ticket{border-radius:12px;width:100%;max-width:120px;display:flex;align-items:center;justify-content:center;color:#e7d197;font:15px monospace;box-shadow:none}
+@media(max-height:360px){.checkout-box{padding:13px 17px}.checkout-box h2{font-size:16px;margin:8px 0}.checkout-summary{padding:9px 0}.checkout-box p{margin:5px 0}}
+
+#auth-page{position:absolute;inset:0;z-index:600;background:radial-gradient(ellipse at 15% 10%,#52766355,transparent 65%),linear-gradient(130deg,#102e30,#0c1a23);color:#e7eedf;display:flex;flex-direction:column;direction:rtl;overflow:hidden}
+.auth-scroll{overflow:auto;min-height:0;flex:1;padding:16px;touch-action:pan-x pan-y;overscroll-behavior:contain}
+.auth-shell{max-width:690px;margin:0 auto}.auth-tabs{display:flex;gap:8px;margin-bottom:12px}.auth-tabs button{flex:1;border:1px solid #bfd2b736;background:#ffffff06;border-radius:10px;padding:10px;color:#bacfc2;font:14px Tahoma;cursor:pointer}.auth-tabs button.active{background:#d4bd82;color:#19382c;border-color:#e4d298}
+.auth-layout{display:grid;grid-template-columns:1.15fr 1fr;gap:15px;align-items:start}.auth-box{border:1px solid #bdd3bd26;background:#ffffff06;border-radius:14px;padding:17px;text-align:right}
+.auth-box h2{font:17px Tahoma;margin:0 0 12px}.auth-label{display:block;font-size:11px;color:#c7d8c9;margin:10px 0 5px}
+.auth-input{display:block;width:100%;height:37px;border:1px solid #b3cbb333;border-radius:8px;background:#0b232880;color:#f3f5e9;padding:7px 10px;font:12px Tahoma;user-select:text;outline:none}.auth-input:focus{border-color:#d9c18a}.auth-input::placeholder{color:#809d8f}
+.auth-help{font-size:9px;color:#91af9f;margin:5px 0;line-height:1.7}.auth-submit{width:100%;border:1px solid #eed8a3;border-radius:9px;background:linear-gradient(#daca9d,#bba36c);color:#1b352b;padding:9px;font:bold 12px Tahoma;margin-top:12px;cursor:pointer}.auth-submit:disabled{opacity:.5;cursor:default}
+.auth-error{font-size:11px;color:#ffd39d;line-height:1.8;margin:9px 0 0;min-height:0}.auth-verification{border-top:1px solid #ffffff13;margin-top:13px;padding-top:3px}
+#auth-demo-code{font-size:11px;color:#f1d89f;line-height:1.8;user-select:text;overflow-wrap:anywhere}
+.auth-brand{text-align:center;padding:9px 0 4px}.auth-brand svg{width:94px;height:76px;display:block;margin:auto}.auth-brand strong{display:block;font-size:18px;color:#ecd9a7;margin-top:4px}
+.auth-support{display:flex;align-items:center;justify-content:center;gap:8px;margin:14px auto 7px;background:#ffffff08;border:1px solid #c1d7c43d;border-radius:10px;color:#cbe0d0;padding:9px 13px;font:11px Tahoma;cursor:pointer}.auth-support svg{width:22px;height:22px;fill:#91bdd0}
+.auth-support-copy{text-align:center;font-size:11px;line-height:2;color:#b3cbbb;margin:8px 0}.auth-demo-note{font-size:9px;line-height:1.9;color:#8da99c;text-align:center;border-top:1px solid #ffffff12;padding-top:10px;margin:13px 0 0}
+.auth-logout{background:#ffffff0c;color:#e2d4ad;border:1px solid #c6d6c133;border-radius:6px;font:9px Tahoma;padding:3px 8px;cursor:pointer;align-self:flex-start}
+@media(max-width:540px){.auth-layout{grid-template-columns:1fr}.auth-shell{max-width:350px}.auth-brand svg{width:86px;height:66px}}
+@media(max-height:390px){.auth-scroll{padding:10px 16px}.auth-box{padding:12px}.auth-label{margin-top:7px}.auth-tabs{margin-bottom:9px}.auth-tabs button{padding:8px}.auth-input{height:33px}}
+
+
+body.auth-locked #rotator > :not(#auth-page){visibility:hidden!important;pointer-events:none!important}
+body.auth-locked #auth-page{display:flex!important;visibility:visible!important}
+
+/* Authentication is a normal upright page; the existing game rotation is unchanged. */
+#auth-page{position:fixed;inset:0;width:100%;height:100%;height:100dvh}
+#auth-page .auth-scroll{padding:20px 16px 30px}
+@media(orientation:portrait){#auth-page .auth-shell{max-width:400px}#auth-page .auth-layout{grid-template-columns:1fr}#auth-page .auth-input{height:42px;font-size:16px}#auth-page .auth-tabs{position:sticky;top:0;z-index:2;background:#173331;padding:5px 0;border-radius:10px}#auth-page .auth-box{padding:17px}#auth-page .auth-submit{min-height:42px}}
+
+
+.auth-guest{display:block;width:100%;margin:0 0 12px;padding:11px 14px;min-height:42px;border:1px solid #cfbb8177;border-radius:10px;background:#ffffff09;color:#eadbb6;font:13px Tahoma;cursor:pointer}
+.auth-guest:hover{background:#ffffff14}.auth-guest:focus-visible{outline:2px solid #e4cf92;outline-offset:2px}
 </style>
+<script>
+const appStorage=(()=>{let native=null;try{native=window.localStorage;native.setItem('tn-storage-probe','1');native.removeItem('tn-storage-probe');}catch(e){native=null;}if(native)return {persistent:true,getItem:k=>native.getItem(k),setItem:(k,v)=>native.setItem(k,v),removeItem:k=>native.removeItem(k)};const memory=new Map();return {persistent:false,getItem:k=>memory.has(k)?memory.get(k):null,setItem:(k,v)=>memory.set(k,String(v)),removeItem:k=>memory.delete(k)};})();
+</script>
 </head>
-<body>
+<body class="auth-locked">
+<section id="auth-page" aria-label="ثبت‌نام و ورود آزمایشی"><div class="auth-scroll"><div class="auth-shell"><div class="auth-tabs" role="tablist"><button id="auth-register-tab" type="button" role="tab" class="active" aria-selected="true" onclick="showAuthTab('register')">ثبت‌نام</button><button id="auth-login-tab" type="button" role="tab" aria-selected="false" onclick="showAuthTab('login')">ورود</button></div><button type="button" class="auth-guest" onclick="enterAsGuest()">ورود به عنوان مهمان</button><div class="auth-layout"><div class="auth-box">
+<form id="auth-register-form"><h2>ساخت حساب کاربری</h2><label class="auth-label" for="register-name">نام کاربری</label><input class="auth-input" id="register-name" autocomplete="username" maxlength="24" placeholder="فارسی یا انگلیسی" required><label class="auth-label" for="register-phone">شماره همراه</label><input class="auth-input" id="register-phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" maxlength="11" placeholder="09123456789" required><p class="auth-help">شمارهٔ ۱۱ رقمی با 09؛ فقط اعداد انگلیسی.</p><label class="auth-label" for="register-password">رمز عبور</label><input class="auth-input" id="register-password" type="password" autocomplete="new-password" minlength="6" maxlength="128" required><p class="auth-help">حداقل ۶ نویسه؛ برای تست، رمز اصلی حساب‌های دیگر را وارد نکنید.</p><button class="auth-submit" id="register-submit" type="button" onclick="submitAuthForm('auth-register-form')">ثبت‌نام</button></form>
+<div class="auth-verification" id="auth-verification"><label class="auth-label" for="register-code">کد تأیید</label><input class="auth-input" id="register-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" dir="ltr" placeholder="کد ۶ رقمی" disabled><div id="auth-demo-code"></div><button class="auth-submit" id="verify-submit" type="button" onclick="verifyDemoAccount()" disabled>تأیید و ورود</button></div>
+<form id="auth-login-form" style="display:none"><h2>ورود به حساب کاربری</h2><label class="auth-label" for="login-name">نام کاربری</label><input class="auth-input" id="login-name" autocomplete="username" maxlength="24" required><label class="auth-label" for="login-password">رمز عبور</label><input class="auth-input" id="login-password" type="password" autocomplete="current-password" maxlength="128" required><button class="auth-submit" id="login-submit" type="button" onclick="submitAuthForm('auth-login-form')">ورود</button></form><p class="auth-error" id="auth-message" role="status" aria-live="polite"></p></div>
+<div class="auth-box"><div class="auth-brand"><svg viewBox="0 0 120 90" aria-hidden="true"><rect x="8" y="7" width="104" height="74" rx="12" fill="#263e32" stroke="#d7bf80" stroke-width="3"/><path d="M20 16h13l-6.5 24zM39 16h13l-6.5 24zM68 16h13l-6.5 24zM87 16h13l-6.5 24zM20 72h13l-6.5-24zM39 72h13l-6.5-24zM68 72h13l-6.5-24zM87 72h13l-6.5-24z" fill="#d2bc87"/><path d="M60 10v68" stroke="#d7bf80" stroke-width="3"/><circle cx="28" cy="23" r="6" fill="#f4e7ca"/><circle cx="93" cy="65" r="6" fill="#102324" stroke="#d2bc87"/></svg><strong>تخته‌نرد</strong></div><button class="auth-support" type="button" onclick="showAuthSupport()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 3 10c-1 .4-1 1 .1 1.4l4.6 1.4 1.8 5.8c.2.6.6.6 1 .2l2.6-2.5 4.6 3.4c.8.5 1.3.2 1.5-.8L22 4c.2-1-.3-1.3-1-1ZM9 12l9-6-7 8-.4 3Z"/></svg>تماس با پشتیبانی</button><p class="auth-support-copy">جهت تأیید حساب کاربری خود، شماره همراه و نام کاربری خود را به پشتیبانی ارسال کنید.</p><p id="auth-support-status" class="auth-help" style="text-align:center">لینک تلگرام پشتیبانی بعداً اضافه می‌شود.</p><p class="auth-demo-note">نسخهٔ آزمایشی: کد تأیید داخل همین صفحه نمایش داده می‌شود؛ پیامکی ارسال نمی‌شود. حساب‌ها و بررسی تکراری‌بودن فقط در همین مرورگر هستند. با پاک‌شدن داده‌های سایت، حساب‌ها حذف می‌شوند.</p></div></div></div></div></section>
 <div id="rotator">
+
+
+<div id="match-screen" role="region" aria-label="جستجوی حریف">
+<button class="gold-btn match-back" aria-label="لغو جستجو و بازگشت" onclick="cancelMatchSearch()">←</button>
+<div class="match-art"><div id="match-board"></div><div class="match-fog"></div><div class="magnifier-orbit"><svg viewBox="0 0 90 90" fill="none" aria-hidden="true"><circle cx="36" cy="35" r="24" fill="#d9f2ff88" stroke="#ffffff" stroke-width="7"/><path d="M54 54L77 77" stroke="#e0f4ff" stroke-width="12" stroke-linecap="round"/><path d="M22 30Q24 19 36 20" stroke="white" stroke-width="4" stroke-linecap="round"/></svg></div></div>
+<div class="match-title">در انتظار پیدا شدن حریف…</div>
+<div id="match-city" class="match-sub"></div>
+<div class="match-progress"><div id="match-progress-fill"></div></div>
+<div id="match-count"></div>
+<div class="match-sub">سرویس حریف آنلاین هنوز متصل نیست</div>
+<div class="match-sub">پس از ۱۰ ثانیه، بازی با حریف کامپیوتری شروع می‌شود</div>
+</div>
+
 <div id="lobby">
     <div class="topbar">
         <div style="display:flex;align-items:center;gap:8px">
@@ -652,12 +936,12 @@ render();
 // Local classic backgammon. White moves 24 -> 1; black moves 1 -> 24.
 let session=0, busy=false, botTimer=null;
 let audioCtx=null, musicTimer=null, musicOn=false, soundOn=true, noteIndex=0;
-try { musicOn=localStorage.getItem('bg-music')==='true'; soundOn=localStorage.getItem('bg-sound')!=='false'; } catch(e){}
+try { musicOn=appStorage.getItem('bg-music')==='true'; soundOn=appStorage.getItem('bg-sound')!=='false'; } catch(e){}
 function audioReady(){try{audioCtx ||= new (window.AudioContext||window.webkitAudioContext)();audioCtx.resume();}catch(e){}}
 function tone(freq,duration=.1,volume=.04){if(!audioCtx)return;let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(volume,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+duration);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+duration);}
 function sfx(){if(soundOn){audioReady();tone(420,.08);}}
 function updateAudio(){for(const [k,v] of [['music',musicOn],['sound',soundOn]]){let el=document.getElementById(k+'-toggle');el.classList.toggle('muted',!v);el.setAttribute('aria-pressed',String(v));el.title=(k==='music'?'موسیقی':'صدای بازی')+(v?' روشن':' خاموش');}clearInterval(musicTimer);if(musicOn && document.getElementById('lobby').style.display==='none'){audioReady();musicTimer=setInterval(()=>tone([220,277.18,329.63,277.18,246.94,293.66,369.99,293.66][noteIndex++%8],.65,.012),550);}}
-function toggleAudio(k){if(k==='music')musicOn=!musicOn;else soundOn=!soundOn;try{localStorage.setItem('bg-music',musicOn);localStorage.setItem('bg-sound',soundOn);}catch(e){}updateAudio();}
+function toggleAudio(k){if(k==='music')musicOn=!musicOn;else soundOn=!soundOn;try{appStorage.setItem('bg-music',musicOn);appStorage.setItem('bg-sound',soundOn);}catch(e){}updateAudio();}
 function stateCopy(s){return {board:s.board.map(p=>({...p})),bar:{...s.bar},off:{...s.off}};}
 function position(){return {board,bar,off};}
 function rawMoves(s,c,d){
@@ -721,5 +1005,411 @@ const originalLobby=renderLobby;renderLobby=function(){originalLobby();document.
 updateAudio();renderLobby();render();
 
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3ca3086a8107829',t:'MTc4OTY2OTkwNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>
+
+// Waiting-room UI; real online matchmaking requires a backend.
+let matchTimer=null, matchDeadline=0, matchPending=false;
+const launchLocalMatch=enterGame;
+renderLobby=function(){originalLobby();};
+enterGame=function(){
+ if(matchPending)return;
+ matchPending=true;clearInterval(musicTimer);
+ document.getElementById('match-board').innerHTML=boardSVG(TABLES[curTable]);
+ document.getElementById('match-city').textContent=TABLES[curTable].name+' | ورودی: '+FAm(TABLES[curTable].entry)+' 🪙 | جایزه: '+FAm(TABLES[curTable].prize)+' 🪙';
+ document.getElementById('match-screen').style.display='flex';
+ matchDeadline=Date.now()+10000;
+ function tick(){
+  if(!matchPending)return;
+  const left=Math.max(0,matchDeadline-Date.now());
+  document.getElementById('match-count').textContent=FA(Math.ceil(left/1000))+' ثانیه';
+  document.getElementById('match-progress-fill').style.width=(100-left/100)+'%';
+  if(left===0){clearInterval(matchTimer);matchTimer=null;matchPending=false;document.getElementById('match-screen').style.display='none';launchLocalMatch();showToast('حریف آنلاین در دسترس نیست؛ بازی با کامپیوتر شروع شد');}
+ }
+ tick();matchTimer=setInterval(tick,100);
+};
+function cancelMatchSearch(){clearInterval(matchTimer);matchTimer=null;matchPending=false;document.getElementById('match-screen').style.display='none';document.getElementById('lobby').style.display='block';renderLobby();}
+document.getElementById('lv-board').onclick=()=>enterGame();
+document.getElementById('lv-board').style.cursor='pointer';
+renderLobby();
+
+</script>
+<script>
+// Progressive city collections. Decorative changes only; game rules unchanged.
+const CITY_STYLES=[
+ {name:'اصفهان',title:'گردوی کلاسیک',rank:'کلاسیک',base:'#e0bd87',light:'#efdbb8',dark:'#81442e',frame:'#795035',edge:'#b98a58',accent:'#d7b47a',tray:'#4b3225',back:'#302218',white:'#fff3d6',black:'#33271e',grain:.13},
+ {name:'رشت',title:'جنگل بارانی',rank:'ممتاز',base:'#a7b7a0',light:'#e3e7ce',dark:'#24604d',frame:'#21493b',edge:'#81a494',accent:'#b9cfad',tray:'#183b30',back:'#102c26',white:'#f5f3df',black:'#163e31',grain:.08},
+ {name:'تهران',title:'نقرهٔ البرز',rank:'حرفه‌ای',base:'#a6b6c5',light:'#e6edf2',dark:'#364e6d',frame:'#2b4057',edge:'#b9cbdc',accent:'#dce9f5',tray:'#1a2d40',back:'#162333',white:'#f8fcff',black:'#26384f',grain:.035},
+ {name:'امارات',title:'طلای صحرا',rank:'اشرافی',base:'#dfbd83',light:'#f8e5bd',dark:'#986032',frame:'#76502d',edge:'#edc777',accent:'#ffe1a0',tray:'#49321f',back:'#362619',white:'#fff2d4',black:'#563924',grain:.08},
+ {name:'دوبی',title:'شبِ الماس',rank:'سلطنتی',base:'#243c55',light:'#dabb76',dark:'#122638',frame:'#142434',edge:'#caa259',accent:'#ffe3a1',tray:'#0b1b2a',back:'#07131f',white:'#fff4d6',black:'#112336',grain:.025}
+];
+function cityDecor(i,c){
+ if(i===1)return `<path d="M13 10l-5 9m15-4l-5 9m-4 89l-5 9m15-4l-5 9" stroke="${c}" stroke-width="1" opacity=".4"/>`;
+ if(i===2)return `<path d="M5 72l6-10 5 7 8-15 7 18" fill="none" stroke="${c}" opacity=".65"/>`;
+ if(i===3)return `<path d="M4 62q8-7 15 0t13 0M4 69q8-7 15 0t13 0M4 76q8-7 15 0t13 0" fill="none" stroke="${c}" opacity=".6"/>`;
+ if(i===4)return `<path d="M6 77V64h5v-6h4V43h3v15h4v6h5v13M17 36v7" fill="none" stroke="${c}" opacity=".7"/><path d="M17 10l5 7-5 7-5-7zM17 112l5 7-5 7-5-7z" fill="none" stroke="${c}" opacity=".6"/>`;
+ return '';
+}
+function themeFor(t){return CITY_STYLES[Math.max(0,TABLES.indexOf(t))];}
+applyTheme=function(t=TABLES[curTable]){
+ const i=Math.max(0,TABLES.indexOf(t)),c=CITY_STYLES[i],root=document.getElementById('rotator');
+ root.dataset.city=String(i);
+ for(const [key,val] of Object.entries(c))root.style.setProperty('--city-'+key,val);
+ const decor=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 136">${cityDecor(i,c.accent)}</svg>`;
+ root.style.setProperty('--city-decor',`url("data:image/svg+xml,${encodeURIComponent(decor)}")`);
+ root.style.setProperty('--city-inlay',i>1?'2px':'1px');
+};
+boardSVG=function(t){
+ const i=Math.max(0,TABLES.indexOf(t)),c=CITY_STYLES[i];let pts='';
+ for(let side=0;side<2;side++)for(let k=0;k<6;k++){
+  const x=13+side*105+k*14;pts+=`<path d="M${x} 13h12l-6 49z" fill="${k%2?c.light:c.dark}"/><path d="M${x} 137h12l-6-49z" fill="${k%2?c.dark:c.light}"/>`;
+ }
+ let rings=i>=2?`<rect x="5" y="5" width="212" height="140" rx="8" fill="none" stroke="${c.accent}" opacity=".7"/>`:'';
+ let checkers='';for(const [x,y,n,col] of [[194,20,2,c.white],[194,130,2,c.black],[19,20,3,c.black],[89,130,3,c.white]])for(let k=0;k<n;k++)checkers+=`<circle cx="${x}" cy="${y+(y<70?1:-1)*k*10}" r="5.4" fill="${col}" stroke="${c.edge}" stroke-width=".8"/>`;
+ return `<svg width="222" height="150" viewBox="0 0 222 150" xmlns="http://www.w3.org/2000/svg"><rect width="222" height="150" rx="10" fill="${c.frame}" stroke="${c.edge}" stroke-width="3"/>${rings}<rect x="10" y="10" width="202" height="130" rx="3" fill="${c.base}"/>${pts}<rect x="100" y="10" width="13" height="130" fill="${c.frame}"/><svg x="100" y="10" width="13" height="130" viewBox="0 0 34 136">${cityDecor(i,c.accent)}</svg>${checkers}</svg>`;
+};
+const resetBeforeCity=resetGame;resetGame=function(){applyTheme(TABLES[curTable]);resetBeforeCity();document.getElementById('table-bar').textContent=TABLES[curTable].name+' • '+CITY_STYLES[curTable].title+' | سفید: شما';};
+const lobbyBeforeCity=renderLobby;renderLobby=function(){lobbyBeforeCity();applyTheme(TABLES[curTable]);let c=CITY_STYLES[curTable];document.getElementById('lv-title').innerHTML=TABLES[curTable].name+' <span class="city-tier">'+c.rank+' · '+FA(curTable+1)+'/۵</span>';let tag=document.getElementById('city-material');if(!tag){tag=document.createElement('div');tag.id='city-material';document.querySelector('.lv-pedestal').after(tag);}tag.textContent=c.title;
+ for(const [id,n] of [['lv-left',curTable-1],['lv-right',curTable+1]])if(CITY_STYLES[n]){const c2=CITY_STYLES[n];document.getElementById(id).style.background=`linear-gradient(145deg,${c2.edge},${c2.frame} 28%,${c2.back})`;document.getElementById(id).style.borderColor=c2.edge;}
+};
+renderLobby();
+
+</script>
+<script>
+// Move history remains local until confirmation; neither opponent nor scoring
+// advances while the player can still undo.
+let awaitingConfirm=false,confirmInterval=null,confirmDeadline=0;
+let tossTimers=[],tossInterval=null,activeImpacts=new Set();
+const surfaceDice=document.createElement('div');surfaceDice.id='table-dice';surfaceDice.setAttribute('role','img');document.getElementById('board').appendChild(surfaceDice);
+const actionBox=document.createElement('div');actionBox.id='turn-actions';actionBox.innerHTML='<button id="commit-turn" class="turn-action" onclick="confirmTurn()"><svg viewBox="0 0 110 40" preserveAspectRatio="none" aria-hidden="true"><rect x="2" y="2" width="106" height="36" rx="5" pathLength="100"/></svg>تأیید <span id="confirm-seconds"></span></button><button id="step-back" class="turn-action" onclick="undoMove()">بازگشت ↶</button>';
+document.querySelector('.panel.me').appendChild(actionBox);
+const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+function paintDice(values,c){surfaceDice.style.display='flex';surfaceDice.classList.toggle('opponent-dice',c==='b');surfaceDice.setAttribute('aria-label','تاس‌ها: '+values.map(FA).join(' و '));if(surfaceDice.children.length!==2)surfaceDice.innerHTML=values.map(()=>'<div class="table-die">'+Array.from({length:9},()=>'<i class="pip"></i>').join('')+'</div>').join('');values.forEach((v,k)=>Array.from(surfaceDice.children[k].querySelectorAll('.pip')).forEach((pip,i)=>pip.classList.toggle('on',PIPS[v].includes(i))));}
+function updateSurfaceDice(){if(busy)return;if(lastRoll)paintDice(lastRoll.d,lastRoll.by);else surfaceDice.style.display='none';}
+function diceImpact(strength=1){
+ if(!soundOn)return;audioReady();if(!audioCtx)return;
+ // A short filtered noise transient plus low wood resonance.
+ const now=audioCtx.currentTime,buffer=audioCtx.createBuffer(1,Math.ceil(audioCtx.sampleRate*.12),audioCtx.sampleRate),data=buffer.getChannelData(0);
+ for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*Math.exp(-i/(audioCtx.sampleRate*.018));
+ const noise=audioCtx.createBufferSource(),filter=audioCtx.createBiquadFilter(),gain=audioCtx.createGain();noise.buffer=buffer;filter.type='lowpass';filter.frequency.value=2400;gain.gain.setValueAtTime(.38*strength,now);noise.connect(filter);filter.connect(gain);gain.connect(audioCtx.destination);activeImpacts.add(noise);noise.onended=()=>activeImpacts.delete(noise);noise.start();
+ const osc=audioCtx.createOscillator(),g=audioCtx.createGain();osc.type='triangle';osc.frequency.setValueAtTime(240,now);osc.frequency.exponentialRampToValueAtTime(95,now+.075);g.gain.setValueAtTime(.13*strength,now);g.gain.exponentialRampToValueAtTime(.0001,now+.11);osc.connect(g);g.connect(audioCtx.destination);activeImpacts.add(osc);osc.onended=()=>activeImpacts.delete(osc);osc.start();osc.stop(now+.12);
+}
+const audioBeforeTurns=toggleAudio;toggleAudio=function(k){audioBeforeTurns(k);if(k==='sound'&&!soundOn)for(const node of activeImpacts){try{node.stop();}catch(e){}}};
+function stopConfirmation(){clearInterval(confirmInterval);confirmInterval=null;awaitingConfirm=false;confirmDeadline=0;}
+function updateConfirmClock(){if(!awaitingConfirm)return;const left=Math.max(0,confirmDeadline-Date.now());document.querySelector('#commit-turn rect').style.strokeDashoffset=String(100-left/40);document.getElementById('confirm-seconds').textContent=FA(Math.ceil(left/1000));if(left<=0)confirmTurn();}
+function requestConfirmation(){
+ if(awaitingConfirm)return;awaitingConfirm=true;selectedIndex=null;validMoves=[];clearTimeout(botTimer);confirmDeadline=Date.now()+4000;
+ render();updateConfirmClock();confirmInterval=setInterval(updateConfirmClock,40);
+}
+function confirmTurn(){
+ if(!awaitingConfirm||turn!=='w'||gameState!=='PLAYING')return;
+ stopConfirmation();history=[];selectedIndex=null;validMoves=[];diceMoves=[];
+ if(finishIfWon()){render();return;}
+ turn='b';lastRoll=null;render();scheduleBot();
+}
+undoMove=function(){
+ if(busy||turn!=='w'||gameState!=='PLAYING'||!history.length)return;
+ stopConfirmation();const saved=history.pop();board=saved.board.map(p=>({...p}));bar={...saved.bar};off={...saved.off};diceMoves=saved.diceMoves.slice();lastRoll=saved.lastRoll?{by:saved.lastRoll.by,d:saved.lastRoll.d.slice()}:null;selectedIndex=null;validMoves=[];render();sfx();
+};
+perform=function(m){
+ if(busy||awaitingConfirm||gameState!=='PLAYING')return;
+ // Validate again so stale taps cannot consume the wrong die.
+ if(!legalMoves().some(v=>v.from===m.from&&v.to===m.to&&v.die===m.die))return;
+ if(turn==='w')history.push({...stateCopy(position()),diceMoves:diceMoves.slice(),lastRoll:lastRoll?{by:lastRoll.by,d:lastRoll.d.slice()}:null});
+ let n=moved(position(),turn,m);board=n.board;bar=n.bar;off=n.off;diceMoves.splice(diceMoves.indexOf(m.die),1);sfx();selectedIndex=null;validMoves=[];advance();
+};
+advance=function(){
+ selectedIndex=null;validMoves=[];
+ const done=off[turn]===15||!diceMoves.length||!legalMoves().length;
+ if(turn==='w'){
+  if(done){if(!history.length&&off.w!==15)showToast('حرکت مجاز ندارید؛ نوبت پس از تأیید رد می‌شود');requestConfirmation();}
+  else render();
+  return;
+ }
+ if(finishIfWon()){render();return;}
+ if(done){turn='w';diceMoves=[];lastRoll=null;history=[];}
+ render();scheduleBot();
+};
+const handleBeforeTurns=handleClick;handleClick=function(idx){if(awaitingConfirm)return;handleBeforeTurns(idx);};
+const bearBeforeTurns=takeOff;takeOff=function(){if(awaitingConfirm)return;bearBeforeTurns();};
+function stopToss(){tossTimers.forEach(clearTimeout);tossTimers=[];clearInterval(tossInterval);tossInterval=null;surfaceDice.classList.remove('tossing');document.getElementById('game').classList.remove('rolling');for(const node of activeImpacts){try{node.stop();}catch(e){}}}
+rollFor=function(c){
+ if(busy||awaitingConfirm||gameState==='GAMEOVER')return;
+ if(gameState!=='OPENING'&&(turn!==c||diceMoves.length))return;
+ stopToss();history=[];busy=true;audioReady();const token=session,isOpening=gameState==='OPENING',values=[die(),die()];
+ render();paintDice(values,c);surfaceDice.classList.remove('tossing');void surfaceDice.offsetWidth;surfaceDice.classList.add('tossing');
+ tossInterval=setInterval(()=>{if(token!==session)return;paintDice([die(),die()],c);},65);
+ for(const [at,power] of [[300,1],[360,.7],[470,.48],[575,.27]])tossTimers.push(setTimeout(()=>{if(token===session)diceImpact(power);},at));
+ tossTimers.push(setTimeout(()=>{
+  clearInterval(tossInterval);tossInterval=null;if(token!==session)return;busy=false;surfaceDice.classList.remove('tossing');paintDice(values,c);
+  if(isOpening){const [w,b]=values;openingDice={w,b};if(w===b){openingDice={w:null,b:null};lastRoll={by:'w',d:values};showToast('تاس شروع مساوی شد؛ دوباره تاس بریزید');render();return;}turn=w>b?'w':'b';diceMoves=[w,b];lastRoll={by:turn,d:values};gameState='PLAYING';showToast('تاس شروع: شما '+FA(w)+'، حریف '+FA(b));}
+  else{const [a,b]=values;diceMoves=a===b?[a,a,a,a]:[a,b];lastRoll={by:c,d:values};}
+  if(!legalMoves().length)advance();else{render();scheduleBot();}
+ },740));
+};
+doRoll=function(){if(awaitingConfirm||busy)return;if(gameState==='OPENING'||(gameState==='PLAYING'&&turn==='w'&&!diceMoves.length))rollFor('w');};
+const renderBeforeTurns=render;render=function(){
+ renderBeforeTurns();updateSurfaceDice();
+ const canAct=turn==='w'&&gameState==='PLAYING'&&!busy;
+ actionBox.style.display=canAct&&(history.length||awaitingConfirm)?'flex':'none';document.getElementById('step-back').style.display=history.length?'block':'none';document.getElementById('commit-turn').style.display=awaitingConfirm?'block':'none';
+ if(awaitingConfirm){document.getElementById('roll-overlay').style.display='none';document.querySelectorAll('.point.valid-move').forEach(el=>el.classList.remove('valid-move'));document.getElementById('tray-w').classList.remove('valid-bear');setStatus('تأیید حرکت‌ها یا بازگشت — تأیید خودکار پس از ۴ ثانیه');}
+};
+const resetBeforeTurns=resetGame;resetGame=function(){stopConfirmation();stopToss();resetBeforeTurns();};
+const leaveBeforeTurns=leaveGame;leaveGame=function(){leaveBeforeTurns();if(document.getElementById('lobby').style.display==='block'){stopConfirmation();stopToss();history=[];surfaceDice.style.display='none';actionBox.style.display='none';}};
+render();
+
+</script>
+<script>
+// Wall-clock turn deadline: rendering, selection and undo cannot reset it.
+let turnClockKey='',turnDeadline=0,turnClockInterval=null,lastWarningSecond=0;
+let timeoutPlaying=false,timeoutMoveTimer=null;
+for(const id of ['av-me','av-opp']){const ring=document.createElement('div');ring.className='turn-clock';ring.setAttribute('role','img');ring.setAttribute('aria-label','زمان باقی‌ماندهٔ نوبت');ring.innerHTML='<svg viewBox="0 0 32 32"><circle class="clock-track" cx="16" cy="16" r="12"/><circle class="clock-progress" cx="16" cy="16" r="12" pathLength="100"/></svg>';document.getElementById(id).appendChild(ring);}
+function hideTurnRings(){document.querySelectorAll('.turn-clock').forEach(el=>el.style.display='none');}
+function clearTurnClock(){clearInterval(turnClockInterval);turnClockInterval=null;turnClockKey='';turnDeadline=0;lastWarningSecond=0;timeoutPlaying=false;clearTimeout(timeoutMoveTimer);timeoutMoveTimer=null;hideTurnRings();}
+function tickTurnClock(){
+ if(!turnDeadline||timeoutPlaying)return;
+ const left=Math.max(0,turnDeadline-Date.now()),seconds=Math.ceil(left/1000),ring=document.querySelector((turn==='w'||gameState==='OPENING'?'#av-me':'#av-opp')+' .turn-clock');
+ ring.style.display='block';ring.classList.toggle('urgent',seconds<=7);ring.querySelector('.clock-progress').style.strokeDashoffset=String(100*(1-left/35000));ring.setAttribute('aria-label','زمان باقی‌مانده '+FA(seconds)+' ثانیه');
+ if(turn==='w'&&seconds>0&&seconds<=7&&seconds!==lastWarningSecond){lastWarningSecond=seconds;if(soundOn){audioReady();tone(880,.065,.06);}}
+ if(left===0){clearInterval(turnClockInterval);turnClockInterval=null;hideTurnRings();if(turn==='w'||gameState==='OPENING'){timeoutPlaying=true;showToast('زمان تمام شد؛ ادامهٔ نوبت به‌صورت خودکار');queueTimeoutMove();}else scheduleBot();}
+}
+function reconcileTurnClock(){
+ const inGame=document.getElementById('lobby').style.display==='none';
+ if(!inGame||gameState==='GAMEOVER'||gameState==='CONNECTING'){clearTurnClock();return;}
+ // Finishing all moves hands over to the separate four-second confirmation timer.
+ if(awaitingConfirm){clearInterval(turnClockInterval);turnClockInterval=null;hideTurnRings();if(timeoutPlaying){confirmTurn();}return;}
+ const key=session+':'+(gameState==='OPENING'?'opening':turn);
+ if(key!==turnClockKey){clearInterval(turnClockInterval);clearTimeout(timeoutMoveTimer);timeoutMoveTimer=null;timeoutPlaying=false;turnClockKey=key;turnDeadline=Date.now()+35000;lastWarningSecond=0;hideTurnRings();}
+ if(timeoutPlaying){queueTimeoutMove();return;}
+ if(!turnClockInterval)turnClockInterval=setInterval(tickTurnClock,100);
+ tickTurnClock();
+}
+function queueTimeoutMove(){
+ if(timeoutMoveTimer!==null)return;
+ const token=session;
+ timeoutMoveTimer=setTimeout(()=>{
+ timeoutMoveTimer=null;if(token!==session||!timeoutPlaying)return;
+ if(gameState==='GAMEOVER'||(gameState==='PLAYING'&&turn!=='w')){timeoutPlaying=false;return;}
+ if(busy){queueTimeoutMove();return;}
+ if(awaitingConfirm){confirmTurn();return;}
+ if(gameState==='OPENING'||!diceMoves.length){rollFor('w');queueTimeoutMove();return;}
+ const moves=legalMoves();if(!moves.length){advance();return;}
+ // Prefer bearing off, hitting a blot, then joining a friendly point.
+ const quality=m=>(m.to===24?100:0)+(m.to<24&&board[m.to].color==='b'&&board[m.to].count===1?25:0)+(m.to<24&&board[m.to].color==='w'?5:0)+m.die;
+ moves.sort((a,b)=>quality(b)-quality(a));perform(moves[0]);if(timeoutPlaying)queueTimeoutMove();
+ },330);
+}
+const renderBeforeClock=render;render=function(){
+ renderBeforeClock();
+ const t=TABLES[curTable];document.getElementById('table-bar').textContent='ورودی: '+FAm(t.entry)+' 🪙 | جایزه: '+FAm(t.prize)+' 🪙';
+ reconcileTurnClock();
+ if(timeoutPlaying&&turn==='w'){document.getElementById('turn-actions').style.display='none';document.getElementById('roll-overlay').style.display='none';setStatus('پایان زمان — سیستم در حال انجام حرکت‌هاست');}
+};
+const clickBeforeClock=handleClick;handleClick=function(i){if(timeoutPlaying)return;clickBeforeClock(i);};
+const bearBeforeClock=takeOff;takeOff=function(){if(timeoutPlaying)return;bearBeforeClock();};
+const undoBeforeClock=undoMove;undoMove=function(){if(timeoutPlaying)return;undoBeforeClock();};
+const rollBeforeClock=doRoll;doRoll=function(){if(timeoutPlaying)return;rollBeforeClock();};
+const resetBeforeClock=resetGame;resetGame=function(){clearTurnClock();resetBeforeClock();render();};
+const leaveBeforeClock=leaveGame;leaveGame=function(){leaveBeforeClock();if(document.getElementById('lobby').style.display==='block')clearTurnClock();};
+render();
+
+</script>
+<script>
+// Remaining uses per visible die. Doubles contribute two uses per face.
+function remainingDieUses(){
+ if(!lastRoll)return [0,0];
+ if(busy||gameState==='OPENING')return [1,1];
+ const [a,b]=lastRoll.d;
+ if(a===b){const n=diceMoves.length;return [Math.max(0,n-2),Math.min(2,n)];}
+ const pool=diceMoves.slice();return [a,b].map(v=>{const at=pool.indexOf(v);if(at<0)return 0;pool.splice(at,1);return 1;});
+}
+function markDiceUsage(){
+ const uses=remainingDieUses();
+ Array.from(surfaceDice.children).forEach((el,i)=>{const active=busy||uses[i]>0;el.classList.toggle('die-available',active);let badge=el.querySelector('.die-remaining');if(!badge){badge=document.createElement('span');badge.className='die-remaining';el.appendChild(badge);}const doubles=lastRoll&&lastRoll.d[0]===lastRoll.d[1]&&gameState==='PLAYING'&&!busy;badge.style.display=doubles&&uses[i]>0?'block':'none';badge.textContent=FA(uses[i]||0);el.setAttribute('aria-label','تاس '+FA(i+1)+(active?'، قابل استفاده':'، مصرف‌شده'));});
+ for(const prefix of ['md','od'])for(let i=0;i<2;i++){const el=document.getElementById(prefix+(i+1));const owner=lastRoll&&(lastRoll.by==='w'?'md':'od');el.classList.toggle('die-spent',!busy&&!!lastRoll&&prefix===owner&&uses[i]===0);}
+}
+const paintBeforeUsage=paintDice;paintDice=function(values,c){paintBeforeUsage(values,c);markDiceUsage();};
+// paintDice updates only the nine pip nodes; the remaining-use badge is separate.
+const renderBeforeUsage=render;render=function(){renderBeforeUsage();markDiceUsage();};
+const DICE_COLLECTION=[
+ ['سفید کلاسیک','ساده و خوش‌خوان','پایه','linear-gradient(135deg,#fffdf6,#d8d5c9)','#252827','#e9e7db','#99978b',''],
+ ['مشکی مات','تیره و مینیمال','پایه','linear-gradient(135deg,#525957,#181e1c)','#f3eddd','#89938a','#0c110f',''],
+ ['گردویی','چوب گرم و طبیعی','پایه','repeating-linear-gradient(10deg,#996342 0 5px,#825135 7px 10px)','#ffe9bc','#bf9565','#4e301d',''],
+ ['مرجانی','رنگ گرم غروب','رنگی','linear-gradient(140deg,#ffb19b,#d65251)','#fff4df','#ffbea8','#8e3437',''],
+ ['آبی دریا','آبی عمیق و آرام','رنگی','linear-gradient(135deg,#79dbe6,#206baf)','#edfaff','#99e9f5','#164671',''],
+ ['سبز جنگلی','الهام از باران رشت','رنگی','linear-gradient(135deg,#8ad1a6,#246149)','#e7f6c9','#a1d8b2','#133f2c',''],
+ ['بنفش مخمل','درخشش ملایم یاسی','رنگی','linear-gradient(135deg,#c5a1ec,#764aab)','#fff3f9','#dbc0ff','#49316f',''],
+ ['مس صیقلی','پرداخت فلزی گرم','فلزی','linear-gradient(130deg,#f3ccb1,#a95e39 40%,#efb587 65%,#a65d3c)','#452719','#fbd2b0','#713e27',''],
+ ['نقرهٔ البرز','نقره‌ای با ته‌رنگ آبی','فلزی','linear-gradient(135deg,#f4fcff,#738d9b 45%,#d5e6ee 70%,#91a4b2)','#233b4c','#e7f6ff','#536d7b',''],
+ ['طلای صحرا','طلایی گرم و صیقلی','فلزی','linear-gradient(135deg,#fff0a7,#b18325 43%,#f4d376 70%,#b48528)','#563b0d','#fff1ad','#775919','royal'],
+ ['شیشهٔ آبی','شفاف با نور آبی','شیشه‌ای','linear-gradient(135deg,#dcf9ffae,#379ca980 60%,#92eaffc9)','#e7ffff','#d5faff','#386e7988','glass'],
+ ['کوارتز صورتی','بلور لطیف صورتی','شیشه‌ای','linear-gradient(135deg,#ffe9f5cc,#c97fada0,#efc9eac9)','#fff7ff','#ffe1f5','#84517188','glass'],
+ ['زمرد بلورین','عمق سبز جواهری','جواهری','conic-gradient(from 20deg,#174839,#64d3a0,#21644a,#95edb7,#174839)','#eaffd5','#b2f6bf','#163f30','glass'],
+ ['یاقوت سرخ','قرمز تراش‌خورده','جواهری','conic-gradient(from 40deg,#6f1c3e,#e97788,#a41e44,#f7a0ad,#6f1c3e)','#ffeecf','#ffc4c8','#52132b','glass'],
+ ['برف قطبی','یخ روشن و دانهٔ برف','ویژه','linear-gradient(135deg,#f5ffff,#a5daec 50%,#d3f9ff)','#337899','#edffff','#77a4c4','glass snow'],
+ ['آتش مذاب','سرخی آتش و طلای شعله','ویژه','radial-gradient(ellipse at 50% 110%,#fff367,#ff9529 45%,#ad222b 85%)','#fff4b3','#ffc676','#7e2522','fire'],
+ ['شفق قطبی','موج سبز، بنفش و آبی','ممتاز','linear-gradient(125deg,#536ebc,#66e7b5 35%,#7066c5 60%,#b9a1ec)','#f6ffff','#d0e8ff','#3e4073','glass'],
+ ['کهکشان','شب بنفش و ستاره‌ها','ممتاز','radial-gradient(ellipse at 25% 80%,#966ec8,transparent 65%),linear-gradient(135deg,#172949,#4e326d,#18345c)','#fff2dc','#c3a1ec','#181d3b','cosmic'],
+ ['الماس یخی','تراش چندرنگ کریستال','لوکس','conic-gradient(from 35deg,#f4fdff,#91bfdf,#dce4ff,#fff,#afd1d7,#e0c1e7,#f4fdff)','#41627a','#f6ffff','#8dabc4','glass snow'],
+ ['سلطنتی دوبی','سرمه‌ای با حاشیهٔ طلا','سلطنتی','linear-gradient(140deg,#36516a,#111d32 55%,#263a50)','#f8dd92','#ebca75','#080f20','royal']
+];
+const pageRoot=document.getElementById('rotator');
+const store=document.createElement('section');store.id='dice-store';store.className='lounge-page';store.setAttribute('aria-label','فروشگاه تاس');store.innerHTML='<header class="lounge-head"><div><div class="page-label">DICE COLLECTION / 20</div><h2 class="lounge-title">گالری تاس‌ها</h2><div class="lounge-subtitle">از سادگی کلاسیک تا درخشش سلطنتی</div></div><button class="back-page" onclick="closeLoungePages()" aria-label="بازگشت به لابی">←</button></header><div class="page-scroller"><div class="shop-intro"><div><strong>یک تاس، یک سبک متفاوت</strong><p>مجموعهٔ طرح‌ها — قیمت‌ها به تومان</p></div><span class="shop-count">۲۰ طرح</span></div><div id="dice-catalog" class="dice-catalog"></div><p class="shop-footnote">فعلاً فقط نمایش طرح‌هاست؛ خرید، پرداخت و انتخاب تاس هنوز فعال نیست.</p></div>';pageRoot.appendChild(store);
+const catalog=document.getElementById('dice-catalog');
+DICE_COLLECTION.forEach((item,i)=>{const [name,desc,tier,face,pip,rim,side,style]=item,price=(i+1)*50000,card=document.createElement('article');card.className='dice-card'+(i>=14?' luxury':'');card.style.setProperty('--face',face);card.style.setProperty('--pip',pip);card.style.setProperty('--rim',rim);card.style.setProperty('--side',side);card.style.setProperty('--glow',rim+'44');const val=i%6+1;card.innerHTML='<span class="dice-number">'+FA(String(i+1).padStart(2,'0'))+'</span><span class="dice-tier">'+tier+'</span><div class="dice-display"><div class="catalog-die '+style+'" role="img" aria-label="تاس '+name+'">'+Array.from({length:9},(_,n)=>'<i class="'+(PIPS[val].includes(n)?'on':'')+'"></i>').join('')+'</div></div><h3>'+name+'</h3><div class="dice-desc">'+desc+'</div><div class="dice-price">'+FAm(price)+' <small>تومان</small></div>';catalog.appendChild(card);});
+const friends=document.createElement('section');friends.id='friends-page';friends.className='lounge-page';friends.setAttribute('aria-label','دوستان');friends.innerHTML='<header class="lounge-head"><div><div class="page-label">FRIENDS</div><h2 class="lounge-title">دوستان</h2><div class="lounge-subtitle">فهرست دوستان شما</div></div><button class="back-page" onclick="closeLoungePages()" aria-label="بازگشت به لابی">←</button></header><div class="page-scroller"><div class="friends-body"><label class="friend-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><input id="friend-query" type="search" placeholder="جستجوی نام دوست…" aria-label="جستجو در دوستان" autocomplete="off"></label><div class="friends-list"><div class="friends-list-head">لیست دوستان <span>۰ دوست</span></div><ul id="friend-items" style="list-style:none;margin:0;padding:0"></ul><div class="friends-empty" role="status"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="20" cy="16" r="7"/><path d="M7 39v-4c0-13 26-13 26 0v4M32 10c9 0 9 13 0 13m5 5c6 1 7 5 7 11"/></svg><strong id="friends-empty-title">هنوز دوستی اضافه نشده</strong><p id="friends-empty-desc">لیست دوستان بعداً اینجا نمایش داده می‌شود.</p></div></div></div></div>';pageRoot.appendChild(friends);
+document.getElementById('friend-query').addEventListener('input',e=>{const query=e.target.value.trim();document.getElementById('friends-empty-title').textContent=query?'دوستی پیدا نشد':'هنوز دوستی اضافه نشده';document.getElementById('friends-empty-desc').textContent=query?'فهرست دوستان فعلاً خالی است.':'لیست دوستان بعداً اینجا نمایش داده می‌شود.';});
+let loungeOpener=null;
+function openLoungePage(id){loungeOpener=document.activeElement;document.querySelectorAll('.lounge-page').forEach(el=>el.style.display='none');const el=document.getElementById(id);el.style.display='flex';el.querySelector('.back-page').focus({preventScroll:true});}
+function closeLoungePages(){document.querySelectorAll('.lounge-page').forEach(el=>el.style.display='none');if(loungeOpener&&typeof loungeOpener.focus==='function')loungeOpener.focus({preventScroll:true});}
+const loungeButtons=document.querySelectorAll('#lv-bottom .lv-smallbtn');loungeButtons[0].onclick=()=>openLoungePage('dice-store');loungeButtons[1].onclick=()=>openLoungePage('friends-page');
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLoungePages();});
+render();
+
+</script>
+<script>
+const lotteryPage=document.createElement('section');lotteryPage.id='daily-lottery';lotteryPage.className='lounge-page';lotteryPage.setAttribute('aria-label','لاتاری روزانه');
+lotteryPage.innerHTML=`
+<header class="lounge-head"><h2 class="lounge-title">اتاق شانس روزانه</h2><button class="back-page" onclick="closeLoungePages()" aria-label="بازگشت به لابی">←</button></header>
+<div class="page-scroller"><div class="simple-lottery">
+<div class="simple-registers">${[1,2,3].map(i=>`<div><button disabled aria-label="ثبت شانس ${FA(i)}؛ فعلاً غیرفعال">ثبت</button><div class="simple-slot" aria-label="جایگاه خالی شانس"></div></div>`).join('')}</div>
+<div class="simple-price">هر شانس مبلغ <strong>۳۵٬۰۰۰</strong> تومان می‌باشد</div>
+<div class="simple-time" aria-label="زمان قرعه‌کشی هنوز فعال نیست">۰۰ : ۰۰ : ۰۰</div>
+<div class="simple-ready"><span>شماره شانس آماده ثبت</span><b>۰</b></div>
+<dl class="simple-totals"><dt>مجموع مبلغ جمع شده</dt><dd>۰</dd><dt>مبلغ هزینه و مالیات</dt><dd>۰</dd><dt>مبلغ برنده برای هر نفر</dt><dd>۰</dd></dl>
+<div class="simple-digits" aria-label="هنوز شماره‌ای انتخاب نشده"><span>۰</span><span>۰</span><span>۰</span><span>۰</span></div>
+<h3 class="simple-history-title">لیست آخرین سه نفر برنده</h3>
+<div class="simple-reward"><span>مبلغ برد برای هر نفر</span><b>۰</b><span>تومان</span></div>
+<div class="simple-winners">${[1,2,3].map(i=>`<div aria-label="برندهٔ ${FA(i)} هنوز ثبت نشده"><span>برنده با شماره</span><b>۰</b></div>`).join('')}</div>
+<p class="simple-inactive">فعلاً نمایشی است؛ ثبت و پرداخت فعال نیست.</p>
+</div></div>`;
+document.getElementById('rotator').appendChild(lotteryPage);
+const lotteryEntry=document.querySelector('#lobby .lv-lottery');lotteryEntry.onclick=()=>openLoungePage('daily-lottery');lotteryEntry.setAttribute('role','button');lotteryEntry.setAttribute('tabindex','0');lotteryEntry.setAttribute('aria-label','باز کردن لاتاری روزانه');lotteryEntry.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLoungePage('daily-lottery');}});
+
+</script>
+<script>
+// DEMO ONLY: client storage is not proof of payment or entitlement.
+// Real transactions require server-side verification and account-backed inventory.
+const DEMO_KEY='takhtenard.demo.inventory.v1';
+let demoInventory={owned:[0],selected:0,tickets:[null,null,null],ticketVersion:2};
+try{const saved=JSON.parse(appStorage.getItem(DEMO_KEY)||'null');if(saved){const owned=Array.isArray(saved.owned)?saved.owned.filter(n=>Number.isInteger(n)&&n>=0&&n<20):[];demoInventory.owned=[...new Set([0,...owned])];demoInventory.selected=demoInventory.owned.includes(saved.selected)?saved.selected:0;if(Array.isArray(saved.tickets)){let next=1;const seen=new Set();demoInventory.tickets=[0,1,2].map(i=>{const value=saved.tickets[i];if(typeof value!=='string'||!/^\d+$/.test(value)||!Number.isSafeInteger(Number(value))||Number(value)<1)return null;const ticket=saved.ticketVersion===2?String(Number(value)):String(next++);if(seen.has(ticket))return null;seen.add(ticket);return ticket;});}}}catch(e){}
+let demoPending=null,demoCheckoutBusy=false,demoCheckoutOpener=null;
+const checkout=document.createElement('div');checkout.id='demo-checkout';checkout.setAttribute('role','dialog');checkout.setAttribute('aria-modal','true');checkout.setAttribute('aria-labelledby','checkout-heading');checkout.innerHTML='<div class="checkout-box"><span class="demo-tag">پرداخت آزمایشی · بدون انتقال پول</span><h2 id="checkout-heading">تست خرید</h2><div class="checkout-summary"><span id="checkout-product"></span><strong id="checkout-price"></strong></div><p id="checkout-info">هیچ مبلغی از حساب یا موجودی شما کم نمی‌شود. اطلاعات کارت و رمز بانکی لازم نیست.</p><div id="checkout-status" class="checkout-status" role="status"></div><div class="checkout-actions"><button id="pay-demo" class="pay-demo" onclick="completeDemoPayment()">پرداخت آزمایشی</button><button id="cancel-demo" onclick="closeDemoCheckout()">انصراف</button></div></div>';document.getElementById('rotator').appendChild(checkout);
+function persistDemoInventory(){try{appStorage.setItem(DEMO_KEY,JSON.stringify(demoInventory));return true;}catch(e){return false;}}
+function openDemoCheckout(kind,id){
+ if(demoCheckoutBusy)return;
+ if(kind==='dice'&&demoInventory.owned.includes(id)){selectOwnedDie(id);return;}
+ if(kind==='ticket'&&demoInventory.tickets[id])return;
+ demoPending={kind,id};demoCheckoutOpener=document.activeElement;
+ document.getElementById('checkout-heading').textContent='تست خرید';document.getElementById('checkout-product').textContent=kind==='dice'?'تاس '+DICE_COLLECTION[id][0]:'کد شانس '+FA(id+1);
+ document.getElementById('checkout-price').textContent=FAm(kind==='dice'?(id+1)*50000:35000)+' تومان';document.getElementById('checkout-status').textContent='';
+ document.getElementById('checkout-info').textContent='هیچ مبلغی از حساب یا موجودی شما کم نمی‌شود. اطلاعات کارت و رمز بانکی لازم نیست.';
+ const pay=document.getElementById('pay-demo');pay.disabled=false;pay.style.display='block';pay.textContent='پرداخت آزمایشی';document.getElementById('cancel-demo').textContent='انصراف';checkout.style.display='flex';pay.focus({preventScroll:true});
+}
+function closeDemoCheckout(){if(demoCheckoutBusy)return;checkout.style.display='none';demoPending=null;if(demoCheckoutOpener?.isConnected)demoCheckoutOpener.focus({preventScroll:true});}
+function completeDemoPayment(){
+ if(demoCheckoutBusy||!demoPending)return;
+ demoCheckoutBusy=true;const {kind,id}=demoPending;
+ // Synchronous simulated receipt: no network call and no card data.
+ if(kind==='dice'){if(!demoInventory.owned.includes(id))demoInventory.owned.push(id);demoInventory.selected=id;}
+ else if(!demoInventory.tickets[id]){demoInventory.tickets[id]=String(Math.max(0,...demoInventory.tickets.filter(Boolean).map(Number))+1);}
+ const saved=persistDemoInventory();updateDemoStore();updateDemoLottery();applySelectedDice();
+ document.getElementById('checkout-heading').textContent='خرید آزمایشی موفق بود';document.getElementById('checkout-info').textContent=kind==='dice'?'تاس «'+DICE_COLLECTION[id][0]+'» فعال شد. تاس‌های شما در بازی با همین طرح نمایش داده می‌شوند.':'کد شانس آزمایشی شما: '+FA(demoInventory.tickets[id])+' — این کد در قرعه‌کشی واقعی شرکت نمی‌کند.';
+ document.getElementById('checkout-status').textContent=saved?'در همین مرورگر ذخیره شد. هیچ پرداخت واقعی انجام نشده است.':'ذخیره‌سازی مرورگر در دسترس نیست؛ این خرید فقط تا بسته‌شدن صفحه باقی می‌ماند.';
+ document.getElementById('pay-demo').disabled=true;document.getElementById('pay-demo').style.display='none';document.getElementById('cancel-demo').textContent='تمام';demoPending=null;demoCheckoutBusy=false;
+}
+function selectOwnedDie(id){if(!demoInventory.owned.includes(id))return;demoInventory.selected=id;const saved=persistDemoInventory();updateDemoStore();applySelectedDice();showToast('تاس '+DICE_COLLECTION[id][0]+' فعال شد'+(saved?'':'؛ ذخیره‌سازی مرورگر در دسترس نیست'));}
+function updateDemoStore(){document.querySelectorAll('.dice-card').forEach((card,id)=>{let button=card.querySelector('.dice-buy');if(!button){button=document.createElement('button');button.className='dice-buy';button.onclick=()=>openDemoCheckout('dice',id);card.appendChild(button);}const owned=demoInventory.owned.includes(id),active=demoInventory.selected===id;card.classList.toggle('is-equipped',active);button.classList.toggle('equipped',active);button.textContent=active?'✓ تاس فعال':owned?'استفاده از این تاس':'خرید آزمایشی';button.setAttribute('aria-label',(active?'تاس فعال: ':owned?'انتخاب ': 'خرید آزمایشی ')+DICE_COLLECTION[id][0]);});}
+function applySkinTo(el,id){
+ for(const name of ['glass','snow','fire','cosmic','royal'])el.classList.remove('skin-'+name);
+ if(id===null){el.classList.remove('purchased-skin');return;}
+ const item=DICE_COLLECTION[id];el.classList.add('purchased-skin');for(const [key,value] of [['face',item[3]],['pip',item[4]],['rim',item[5]],['side',item[6]]])el.style.setProperty('--skin-'+key,value);
+ for(const name of item[7].split(' ').filter(Boolean))el.classList.add('skin-'+name);
+ el.dataset.skin=String(id);
+}
+function applySelectedDice(){
+ const id=demoInventory.selected;
+ // The bot keeps its own classic dice; ownership applies to this player's rolls only.
+ const human=!surfaceDice.classList.contains('opponent-dice');surfaceDice.querySelectorAll('.table-die').forEach(el=>applySkinTo(el,human?id:null));
+ for(const elId of ['md1','md2'])applySkinTo(document.getElementById(elId),id);
+}
+const paintBeforePurchases=paintDice;paintDice=function(v,c){paintBeforePurchases(v,c);applySelectedDice();};
+const renderBeforePurchases=render;render=function(){renderBeforePurchases();applySelectedDice();};
+function updateDemoLottery(){
+ document.querySelectorAll('.simple-registers>div').forEach((slot,i)=>{const ticket=demoInventory.tickets[i],button=slot.querySelector('button'),badge=slot.querySelector('.simple-slot');button.disabled=!!ticket;button.textContent=ticket?'ثبت شد':'ثبت';button.setAttribute('aria-label',ticket?'کد شانس آزمایشی ثبت شد':'ثبت آزمایشی کد شانس '+FA(i+1));button.onclick=()=>openDemoCheckout('ticket',i);badge.classList.toggle('has-ticket',!!ticket);badge.textContent=ticket?FA(ticket):'';badge.setAttribute('aria-label',ticket?'کد آزمایشی '+FA(ticket):'جایگاه خالی شانس');});
+ const count=demoInventory.tickets.filter(Boolean).length;
+ document.querySelector('.simple-totals dt').textContent='مجموع خرید آزمایشی شما';document.querySelector('.simple-totals dd').textContent=FAm(count*35000);
+ document.querySelector('.simple-ready b').textContent=FA(Math.max(0,...demoInventory.tickets.filter(Boolean).map(Number))+1);
+ document.querySelector('.simple-inactive').textContent='حالت آزمایشی؛ بدون پرداخت واقعی و بدون قرعه‌کشی. کدها فقط در همین مرورگر ذخیره می‌شوند.';
+}
+store.querySelector('.shop-footnote').textContent='خرید آزمایشی است و پولی دریافت نمی‌شود. تاس سفید پیش‌فرض رایگان است. خریدها در همین مرورگر ذخیره می‌شوند؛ با پاک‌کردن داده‌های سایت از بین می‌روند.';
+store.querySelector('.shop-intro p').textContent='پرداخت آزمایشی • بدون کسر پول • قیمت‌ها به تومان';
+const ticketDemoTag=document.createElement('span');ticketDemoTag.className='demo-tag';ticketDemoTag.textContent='حالت آزمایشی';lotteryPage.querySelector('.lounge-title').append(' ',ticketDemoTag);
+// Escape dismisses the checkout before its underlying page; keep focus inside dialog.
+document.addEventListener('keydown',e=>{if(checkout.style.display!=='flex')return;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();closeDemoCheckout();}else if(e.key==='Tab'){const controls=Array.from(checkout.querySelectorAll('button')).filter(b=>!b.disabled&&b.style.display!=='none');let index=controls.indexOf(document.activeElement);e.preventDefault();controls[(index+(e.shiftKey?-1:1)+controls.length)%controls.length].focus();}},true);
+persistDemoInventory();updateDemoStore();updateDemoLottery();applySelectedDice();
+
+</script>
+<script>
+// Local demo accounts only. Not server authentication or SMS verification.
+const AUTH_USERS='takhtenard.demo.users.v1',AUTH_SESSION='takhtenard.demo.session.v1';
+let activeDemoUser=null,authPending=null,authWorking=false,authStorageOK=true;
+try{appStorage.setItem('takhtenard.storage-test','1');appStorage.removeItem('takhtenard.storage-test');}catch(e){authStorageOK=false;}
+const authPage=document.getElementById('auth-page');
+function showAuthSupport(){document.getElementById('auth-support-status').textContent='لینک تلگرام هنوز تنظیم نشده است؛ فعلاً از کد آزمایشی همین صفحه استفاده کنید.';}
+function showAuthTab(tab){const reg=tab==='register';document.getElementById('auth-register-form').style.display=reg?'block':'none';document.getElementById('auth-verification').style.display=reg?'block':'none';document.getElementById('auth-login-form').style.display=reg?'none':'block';for(const name of ['register','login']){const el=document.getElementById('auth-'+name+'-tab');el.classList.toggle('active',name===tab);el.setAttribute('aria-selected',String(name===tab));}authMessage('');}
+function authMessage(text){document.getElementById('auth-message').textContent=text;}
+function normalizeUser(name){return name.normalize('NFKC').replace(/ي/g,'ی').replace(/ك/g,'ک').trim().replace(/\s+/g,' ').toLowerCase();}
+function loadDemoUsers(){try{const users=JSON.parse(appStorage.getItem(AUTH_USERS)||'[]');return Array.isArray(users)?users:[];}catch(e){return [];}}
+function safeSaveUsers(users){try{appStorage.setItem(AUTH_USERS,JSON.stringify(users));return true;}catch(e){authMessage('ذخیره‌سازی مرورگر در دسترس نیست؛ ثبت‌نام انجام نشد. فایل را روی سایت HTTPS باز کنید.');return false;}}
+function toHex(bytes){return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');}
+async function hashDemoPassword(password,salt){if(!crypto.subtle)throw Error('secure-context');const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveBits']);return toHex(new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(salt),iterations:100000,hash:'SHA-256'},key,256)));}
+function setAuthWorking(v){authWorking=v;document.getElementById('register-submit').disabled=v;document.getElementById('login-submit').disabled=v;}
+document.getElementById('auth-register-form').addEventListener('submit',async e=>{
+ e.preventDefault();if(authWorking)return;authMessage('');
+ if(!authStorageOK){authMessage('ذخیره‌سازی مرورگر مسدود است. برای تست حساب‌ها، فایل را روی سایت HTTPS باز کنید.');return;}
+ const name=document.getElementById('register-name').value.trim(),key=normalizeUser(name),phone=document.getElementById('register-phone').value,password=document.getElementById('register-password').value;
+ if(!/^[A-Za-z\u0621-\u063A\u0641-\u064A\u067E\u0686\u0698\u06A9\u06AF\u06CC0-9_ ]{3,24}$/.test(key)){authMessage('نام کاربری باید ۳ تا ۲۴ نویسه و شامل حروف فارسی یا انگلیسی، عدد، فاصله یا زیرخط باشد.');return;}
+ if(!/^09[0-9]{9}$/.test(phone)){authMessage('شماره همراه را با ۱۱ رقم انگلیسی و شروع 09 وارد کنید.');return;}
+ if(password.length<6){authMessage('رمز عبور باید حداقل ۶ نویسه باشد.');return;}
+ const users=loadDemoUsers();if(users.some(u=>u.key===key)){authMessage('این نام کاربری قبلاً ثبت شده است.');return;}if(users.some(u=>u.phone===phone)){authMessage('این شماره همراه قبلاً ثبت شده است.');return;}
+ setAuthWorking(true);try{const salt=toHex(crypto.getRandomValues(new Uint8Array(16))),hash=await hashDemoPassword(password,salt);const n=crypto.getRandomValues(new Uint32Array(1))[0];authPending={user:{id:toHex(crypto.getRandomValues(new Uint8Array(16))),name,key,phone,salt,hash},code:String(100000+n%900000),expires:Date.now()+300000};document.getElementById('register-password').value='';document.getElementById('register-code').disabled=false;document.getElementById('register-code').value='';document.getElementById('verify-submit').disabled=false;document.getElementById('auth-demo-code').textContent='کد آزمایشی: '+authPending.code+' — معتبر تا ۵ دقیقه؛ پیامک ارسال نشده است.';authMessage('مشخصات آماده است؛ برای تکمیل ثبت‌نام، کد آزمایشی را وارد کنید.');document.getElementById('register-code').focus();}catch(e){authMessage('برای ثبت‌نام امنِ آزمایشی، فایل را روی سایت HTTPS باز کنید. رمز ذخیره نشد.');}finally{setAuthWorking(false);}
+});
+function verifyDemoAccount(){if(!authPending){authMessage('ابتدا مشخصات را وارد کنید و ثبت‌نام بزنید.');return;}if(Date.now()>authPending.expires){authMessage('کد منقضی شد؛ دوباره ثبت‌نام بزنید.');return;}if(document.getElementById('register-code').value!==authPending.code){authMessage('کد تأیید درست نیست.');return;}
+ const users=loadDemoUsers(),user=authPending.user;if(users.some(u=>u.key===user.key||u.phone===user.phone)){authMessage('نام کاربری یا شماره همراه قبلاً ثبت شده است.');return;}users.push(user);if(!safeSaveUsers(users))return;authPending=null;enterDemoAccount(user);}
+document.getElementById('auth-login-form').addEventListener('submit',async e=>{e.preventDefault();if(authWorking)return;const key=normalizeUser(document.getElementById('login-name').value),password=document.getElementById('login-password').value,user=loadDemoUsers().find(u=>u.key===key);if(!user){authMessage('نام کاربری یا رمز عبور درست نیست.');return;}setAuthWorking(true);try{if(await hashDemoPassword(password,user.salt)!==user.hash){authMessage('نام کاربری یا رمز عبور درست نیست.');return;}enterDemoAccount(user);}catch(e){authMessage('ورود در این محیط ممکن نیست؛ صفحه را روی سایت HTTPS باز کنید.');}finally{setAuthWorking(false);}});
+function accountInventoryKey(){return activeDemoUser?DEMO_KEY+'.user.'+activeDemoUser.id:DEMO_KEY;}
+persistDemoInventory=function(){try{appStorage.setItem(accountInventoryKey(),JSON.stringify(demoInventory));return appStorage.persistent;}catch(e){return false;}};
+function enterDemoAccount(user){
+ activeDemoUser=user;myName=user.name;document.body.classList.remove('auth-locked');try{appStorage.setItem('takhtenard.auth.gate.v2','seen');}catch(e){}try{appStorage.setItem(AUTH_SESSION,user.id);}catch(e){}
+ demoInventory={owned:[0],selected:0,tickets:[null,null,null],ticketVersion:2};try{const saved=JSON.parse(appStorage.getItem(accountInventoryKey())||'null');if(saved){demoInventory.owned=[...new Set([0,...(Array.isArray(saved.owned)?saved.owned.filter(n=>Number.isInteger(n)&&n>=0&&n<20):[])])];demoInventory.selected=demoInventory.owned.includes(saved.selected)?saved.selected:0;demoInventory.tickets=[0,1,2].map(i=>typeof saved.tickets?.[i]==='string'&&/^[1-9][0-9]*$/.test(saved.tickets[i])?saved.tickets[i]:null);}}catch(e){}
+ document.getElementById('lobby').style.display='block';authPage.style.display='none';document.getElementById('lv-name').value=myName;document.getElementById('lv-name').readOnly=true;document.getElementById('lv-name').title='نام کاربری حساب';document.getElementById('login-password').value='';document.getElementById('register-password').value='';updateDemoStore();updateDemoLottery();applySelectedDice();renderLobby();render();
+}
+function logoutDemoAccount(){if(!confirm('از حساب کاربری خارج شوید؟'))return;try{appStorage.removeItem(AUTH_SESSION);}catch(e){}activeDemoUser=null;authPending=null;document.body.classList.add('auth-locked');clearTurnClock();stopToss();stopConfirmation();clearTimeout(botTimer);session++;busy=false;gameState='CONNECTING';cancelMatchSearch();closeLoungePages();closeDemoCheckout();document.getElementById('gameover-modal').style.display='none';document.getElementById('lobby').style.display='block';clearInterval(musicTimer);authPage.style.display='flex';document.getElementById('auth-demo-code').textContent='';document.getElementById('register-code').value='';document.getElementById('register-code').disabled=true;document.getElementById('verify-submit').disabled=true;showAuthTab('login');}
+const logoutButton=document.createElement('button');logoutButton.className='auth-logout';logoutButton.textContent='خروج از حساب';logoutButton.onclick=logoutDemoAccount;document.getElementById('lv-lvl').parentElement.appendChild(logoutButton);
+// The gate is for demo UI only, not a security boundary against browser scripts.
+try{const sessionId=appStorage.getItem(AUTH_SESSION),user=loadDemoUsers().find(u=>u.id===sessionId);if(user)enterDemoAccount(user);}catch(e){}
+if(!authStorageOK)authMessage('ذخیره‌سازی در پیش‌نمایش ممکن است مسدود باشد؛ برای تست، فایل را روی سایت HTTPS خود باز کنید.');
+
+</script>
+<script>
+if(!appStorage.persistent){
+ document.querySelector('.auth-demo-note').textContent='حالت پیش‌نمایش: ثبت‌نام و ورود قابل تست است؛ حساب‌ها فقط تا بسته‌شدن این صفحه باقی می‌مانند. برای ذخیرهٔ دائمی در همین مرورگر، فایل را روی سایت خود باز کنید. کد تأیید پیامکی نیست.';
+ document.querySelector('#dice-store .shop-footnote').textContent='حالت پیش‌نمایش: خرید آزمایشی و بدون کسر پول است؛ اطلاعات تا بسته‌شدن صفحه باقی می‌ماند.';
+}
+</script>
+<script>
+function submitAuthForm(id){const form=document.getElementById(id);if(form.reportValidity())form.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));}
+for(const id of ['auth-register-form','auth-login-form'])document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submitAuthForm(id);}});
+</script>
+<script>
+function enterAsGuest(){
+ if(authWorking){authMessage('لطفاً صبر کنید تا بررسی فعلی تمام شود.');return;}
+ authPending=null;
+ enterDemoAccount({id:'local-demo-guest',name:'مهمان',guest:true});
+ // Guest access is not registration and must not create an authenticated session.
+ try{appStorage.removeItem(AUTH_SESSION);}catch(e){}
+ authMessage('');
+}
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3cf76238e3f6fe2',t:'MTc4OTcyNTE4NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
