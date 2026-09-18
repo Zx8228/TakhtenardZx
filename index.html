@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>تخته نرد حرفه‌ای آنلاین</title>
-<script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden}
@@ -101,6 +101,37 @@ input.lv-name{background:linear-gradient(#d7ccc8,#a1887f);color:#3e2723;border:2
 .lottery-icon{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#b9f6ca,#2e7d32 60%,#1b5e20);border:3px solid #ffd54f;color:#fff;font-size:28px;font-weight:bold;display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px 5px rgba(46,204,113,.45),0 4px 8px rgba(0,0,0,.5);text-shadow:0 2px 3px rgba(0,0,0,.6);animation:pulse 1.8s infinite}
 .lottery-label{font-size:11px;font-weight:bold;color:#ffe082;text-shadow:0 1px 3px #000;background:rgba(0,0,0,.4);padding:2px 8px;border-radius:8px;white-space:nowrap}
 .entry-pill{cursor:pointer;animation:pulse 1.6s infinite}
+
+/* Classic board — no ornaments */
+body{background:#291b14}
+#board{background:#dfbd83!important;padding:5px;gap:0}
+#board-frame{background:linear-gradient(90deg,#69402a,#a06a40,#69402a)!important;border:3px solid #482b1b;padding:8px}
+.bar{background:#805231!important;width:6%;margin:0 1%;flex-shrink:0}
+.half{width:46%;gap:2px}
+.tray{background:#533622!important;cursor:pointer}
+.tri{left:2%;right:2%;background-image:none!important;clip-path:polygon(0 0,100% 0,50% 100%)}
+.tri.a{background:#783b28!important}.tri.b{background:#f5dfb2!important}
+.checker{flex-shrink:0;width:90%;max-width:36px;transition:transform .15s}
+.checker::after{content:'';width:65%;height:65%;border-radius:50%;border:1px solid #ffffff35}
+.checker.w{background:radial-gradient(circle at 35% 30%,#fff9eb,#e4d5b7 70%,#b29b73);border:1px solid #b39a72;color:#443020}
+.checker.b{background:radial-gradient(circle at 35% 30%,#62605b,#272622 70%,#12110f);border:1px solid #111;color:#fff}
+.point.selected{outline:2px solid #f9c45b;background:#ffe39633}
+.point.valid-move{background:#68bb5133;outline:1px solid #74b65b}
+.point.bottom.valid-move::before{top:auto;bottom:4px}
+.tray.valid-bear{outline:3px solid #8bd463;background:#5a7937!important}
+.corner-btns{left:8px;right:auto}.audio-controls{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:6px;z-index:50}
+.gold-btn{width:34px;height:34px;font-size:22px;background:#d8b779;border:1px solid #71502e;box-shadow:0 2px 5px #0005;color:#382718}
+.audio-btn{position:relative}.audio-btn svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.audio-btn.muted:after{content:'';position:absolute;width:28px;height:3px;background:#9c3025;transform:rotate(-45deg);border:1px solid #e9cd9c}
+#status-msg{max-width:80%;font-size:11px;white-space:normal;width:max-content;color:#f4e5ce}
+#table-bar{max-width:75%;font-size:11px;padding:4px 10px}
+#game{padding-top:42px;padding-bottom:34px}
+.dbox{background:#f8efd9;color:#35291d;font-size:25px;line-height:27px}
+#roll-overlay button{background:#6c472b;border-color:#d6b57b;font-size:14px;animation:none;padding:9px 16px}
+#toast{z-index:400;font-size:12px}
+@keyframes rollShake{25%{transform:rotate(20deg)}75%{transform:rotate(-20deg)}}
+.rolling .dbox{animation:rollShake .12s infinite}
+
 </style>
 </head>
 <body>
@@ -141,11 +172,11 @@ input.lv-name{background:linear-gradient(#d7ccc8,#a1887f);color:#3e2723;border:2
     </div>
 </div>
 
-<div class="corner-btns">
-    <button class="gold-btn" onclick="changeName()">⚙️</button>
-    <button class="gold-btn" onclick="if(confirm('خروج از بازی؟'))location.reload()">➜</button>
+<div class="corner-btns"><button class="gold-btn" aria-label="بازگشت به تالار" onclick="leaveGame()">←</button></div>
+<div class="audio-controls">
+<button id="music-toggle" class="gold-btn audio-btn" aria-label="موسیقی" onclick="toggleAudio('music')"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13M9 8l11-2"/><ellipse cx="6" cy="18" rx="3" ry="2"/><ellipse cx="17" cy="16" rx="3" ry="2"/></svg></button>
+<button id="sound-toggle" class="gold-btn audio-btn" aria-label="صدای بازی" onclick="toggleAudio('sound')"><svg viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3zM16 8q5 4 0 8M19 5q8 7 0 14"/></svg></button>
 </div>
-
 <div id="my-id-display" style="display:none"></div>
 <div id="table-bar" style="display:none"></div>
 <div id="status-msg">در حال اتصال...</div>
@@ -197,7 +228,7 @@ const FA=n=>n.toString().replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
 let myName="بازیکن";
 let myAvatar="😎";
 
-let peer=(typeof Peer!=="undefined")?new Peer():null,conn=null,myColor=null,myId="";
+let peer=null,conn=null,myColor='w',myId='';
 if(!peer)setStatus("⚠️ کتابخانهٔ اتصال بارگذاری نشد");
 let opp={name:"حریف",avatar:"👤"};
 let scores={w:0,b:0};
@@ -546,7 +577,7 @@ function motifSVG(m,c){
 }
 
 function boardSVG(t){
-    const bg=t.board[0],fr=t.board[1],p1=t.board[2],p2=t.board[3];
+    const bg='#dfbd83',fr='#805231',p1='#783b28',p2='#f5dfb2';
     let pts='';
     for(let i=0;i<6;i++){
         let x=10+i*14;
@@ -560,7 +591,7 @@ function boardSVG(t){
       '<rect x="0" y="0" width="212" height="140" rx="10" fill="'+fr+'"/>'+
       '<rect x="6" y="6" width="200" height="128" rx="6" fill="'+bg+'"/>'+
       '<rect x="100" y="6" width="12" height="128" fill="'+fr+'" opacity=".85"/>'+pts+
-      motifSVG(t.motif,p1)+'</svg>';
+      '</svg>';
 }
 
 function renderLobby(){
@@ -617,5 +648,78 @@ renderLobby();
 applyTheme(TABLES[curTable]);
 render();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3c88645b99ad0a3',t:'MTc4OTY1MjQ0NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>
+// Local classic backgammon. White moves 24 -> 1; black moves 1 -> 24.
+let session=0, busy=false, botTimer=null;
+let audioCtx=null, musicTimer=null, musicOn=false, soundOn=true, noteIndex=0;
+try { musicOn=localStorage.getItem('bg-music')==='true'; soundOn=localStorage.getItem('bg-sound')!=='false'; } catch(e){}
+function audioReady(){try{audioCtx ||= new (window.AudioContext||window.webkitAudioContext)();audioCtx.resume();}catch(e){}}
+function tone(freq,duration=.1,volume=.04){if(!audioCtx)return;let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(volume,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+duration);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+duration);}
+function sfx(){if(soundOn){audioReady();tone(420,.08);}}
+function updateAudio(){for(const [k,v] of [['music',musicOn],['sound',soundOn]]){let el=document.getElementById(k+'-toggle');el.classList.toggle('muted',!v);el.setAttribute('aria-pressed',String(v));el.title=(k==='music'?'موسیقی':'صدای بازی')+(v?' روشن':' خاموش');}clearInterval(musicTimer);if(musicOn && document.getElementById('lobby').style.display==='none'){audioReady();musicTimer=setInterval(()=>tone([220,277.18,329.63,277.18,246.94,293.66,369.99,293.66][noteIndex++%8],.65,.012),550);}}
+function toggleAudio(k){if(k==='music')musicOn=!musicOn;else soundOn=!soundOn;try{localStorage.setItem('bg-music',musicOn);localStorage.setItem('bg-sound',soundOn);}catch(e){}updateAudio();}
+function stateCopy(s){return {board:s.board.map(p=>({...p})),bar:{...s.bar},off:{...s.off}};}
+function position(){return {board,bar,off};}
+function rawMoves(s,c,d){
+ const moves=[],dir=c==='w'?-1:1;
+ const open=t=>s.board[t].color===c||s.board[t].count<2;
+ if(s.bar[c]){const to=c==='w'?24-d:d-1;if(open(to))moves.push({from:-1,to,die:d});return moves;}
+ const home=s.board.every((p,i)=>p.color!==c||!p.count||(c==='w'?i<6:i>=18));
+ s.board.forEach((p,from)=>{if(p.color!==c||!p.count)return;const to=from+dir*d;
+ if(to>=0&&to<24){if(open(to))moves.push({from,to,die:d});}
+ else if(home){const distance=c==='w'?from+1:24-from;
+ const farther=s.board.some((q,i)=>q.color===c&&q.count&&(c==='w'?i>from:i<from));
+ if(d===distance||(d>distance&&!farther))moves.push({from,to:24,die:d});}
+ });return moves;
+}
+function moved(s,c,m){let n=stateCopy(s);if(m.from===-1)n.bar[c]--;else{let p=n.board[m.from];if(--p.count===0)p.color=null;}
+ if(m.to===24)n.off[c]++;else{let p=n.board[m.to];if(p.count===1&&p.color!==c){n.bar[p.color]++;p.count=0;}p.color=c;p.count++;}return n;}
+function maxPlayable(s,c,ds){if(!ds.length)return 0;let best=0;for(const d of new Set(ds)){let rem=ds.slice();rem.splice(rem.indexOf(d),1);for(const m of rawMoves(s,c,d)){best=Math.max(best,1+maxPlayable(moved(s,c,m),c,rem));if(best===ds.length)return best;}}return best;}
+function legalMoves(){let s=position(),best=0,all=[];for(const d of new Set(diceMoves)){let rem=diceMoves.slice();rem.splice(rem.indexOf(d),1);for(const m of rawMoves(s,turn,d)){let n=1+maxPlayable(moved(s,turn,m),turn,rem);if(n>best){best=n;all=[];}if(n===best)all.push(m);}}
+ // When only one of two different dice can be used, the higher die is compulsory.
+ if(best===1&&diceMoves.length===2&&diceMoves[0]!==diceMoves[1]&&all.length){const high=Math.max(...all.map(m=>m.die));all=all.filter(m=>m.die===high);}return all;}
+function die(){let v=new Uint32Array(1);do{crypto.getRandomValues(v);}while(v[0]>=4294967292);return v[0]%6+1;}
+function finishIfWon(){if(off.w!==15&&off.b!==15)return false;gameState='GAMEOVER';let winner=off.w===15?'w':'b',loser=winner==='w'?'b':'w';let points=1;if(off[loser]===0){points=2;if(bar[loser]||board.some((p,i)=>p.color===loser&&(winner==='w'?i<6:i>=18)))points=3;}scores[winner]+=points;
+ document.getElementById('result-text').textContent=(winner==='w'?'🏆 شما برنده شدید':'حریف کامپیوتری برنده شد')+' — '+FA(points)+' امتیاز';document.getElementById('gameover-modal').style.display='flex';return true;}
+function advance(){selectedIndex=null;validMoves=[];if(finishIfWon()){render();return;}
+ if(diceMoves.length&&!legalMoves().length){showToast('حرکت مجاز ندارید؛ نوبت عوض شد');diceMoves=[];}
+ if(!diceMoves.length){turn=turn==='w'?'b':'w';lastRoll=null;history=[];}
+ render();scheduleBot();}
+function perform(m){let n=moved(position(),turn,m);board=n.board;bar=n.bar;off=n.off;diceMoves.splice(diceMoves.indexOf(m.die),1);sfx();advance();}
+function scheduleBot(){clearTimeout(botTimer);if(gameState!=='PLAYING'||turn!=='b'||busy)return;const token=session;botTimer=setTimeout(()=>{if(token!==session||turn!=='b'||gameState!=='PLAYING')return;if(!diceMoves.length){rollFor('b');return;}let moves=legalMoves();if(!moves.length){advance();return;}moves.sort((a,b)=>moveScore(b)-moveScore(a));perform(moves[0]);},650);}
+function moveScore(m){return (m.to===24?100:0)+(m.to<24&&board[m.to].count===1&&board[m.to].color==='w'?25:0)+(m.to<24&&board[m.to].color==='b'?5:0)+m.die+Math.random()*3;}
+function rollFor(c){if(busy)return;busy=true;audioReady();const token=session;document.getElementById('game').classList.add('rolling');render();let ticks=0;const anim=setInterval(()=>{if(token!==session){clearInterval(anim);return;}let prefix=c==='w'?'md':'od';document.getElementById(prefix+'1').textContent=DICE_FACES[die()];document.getElementById(prefix+'2').textContent=DICE_FACES[die()];if(soundOn)tone(180+ticks*35,.04,.03);ticks++;},70);
+ setTimeout(()=>{clearInterval(anim);if(token!==session)return;busy=false;document.getElementById('game').classList.remove('rolling');
+ if(gameState==='OPENING'){let w=die(),b=die();openingDice={w,b};if(w===b){showToast('تاس شروع مساوی شد؛ دوباره تاس بریزید');openingDice={w:null,b:null};render();return;}turn=w>b?'w':'b';diceMoves=[w,b];lastRoll={by:turn,d:[w,b]};gameState='PLAYING';showToast('تاس شروع: شما '+FA(w)+'، حریف '+FA(b));}
+ else{let a=die(),b=die();diceMoves=a===b?[a,a,a,a]:[a,b];lastRoll={by:c,d:[a,b]};}
+ if(!legalMoves().length)advance();else{render();scheduleBot();}},500);}
+doRoll=function(){if(busy||gameState==='GAMEOVER')return;if(gameState==='OPENING'||(turn==='w'&&!diceMoves.length))rollFor('w');};
+handleClick=function(idx){if(busy||gameState!=='PLAYING'||turn!=='w'||!diceMoves.length)return;const moves=legalMoves();if(bar.w){const m=moves.find(m=>m.from===-1&&m.to===idx);if(m)perform(m);else showToast('اول مهرهٔ زده‌شده را در خانهٔ مجاز وارد کنید');return;}
+ const m=moves.find(m=>m.from===selectedIndex&&m.to===idx);if(m){perform(m);return;}
+ if(board[idx].color==='w'&&moves.some(m=>m.from===idx)){selectedIndex=idx;validMoves=moves.filter(m=>m.from===idx&&m.to!==24).map(m=>m.to);}else{selectedIndex=null;validMoves=[];}render();};
+function takeOff(){if(busy||turn!=='w'||gameState!=='PLAYING')return;let m=legalMoves().filter(m=>m.from===selectedIndex&&m.to===24).sort((a,b)=>a.die-b.die)[0];if(m)perform(m);}
+const originalRender=render;
+render=function(){originalRender();const moves=gameState==='PLAYING'&&turn==='w'&&diceMoves.length?legalMoves():[];
+ document.querySelectorAll('.point').forEach(el=>{const idx=Number(el.dataset.point);el.classList.toggle('valid-move',bar.w&&turn==='w'?moves.some(m=>m.from===-1&&m.to===idx):validMoves.includes(idx));});
+ const tray=document.getElementById('tray-w');tray.classList.toggle('valid-bear',moves.some(m=>m.from===selectedIndex&&m.to===24));tray.onclick=takeOff;tray.title='خارج کردن مهرهٔ انتخاب‌شده';
+ if(busy)document.getElementById('roll-overlay').style.display='none';
+ if(gameState==='OPENING')setStatus(busy?'در حال انداختن تاس شروع…':'برای تعیین شروع‌کننده تاس بریزید');
+ if(gameState==='PLAYING'){let msg=turn==='b'?'نوبت حریف کامپیوتری':busy?'در حال تاس انداختن…':!diceMoves.length?'نوبت شما — تاس بریزید':bar.w?'مهرهٔ زده‌شده: خانهٔ سبز را لمس کنید':tray.classList.contains('valid-bear')?'برای خارج کردن، سینی سبز را لمس کنید':'مهرهٔ سفید، سپس خانهٔ سبز را لمس کنید';if(diceMoves.length)msg+=' | باقی‌مانده: '+diceMoves.map(FA).join('، ');setStatus(msg);}
+ if(gameState==='GAMEOVER')setStatus('بازی تمام شد');
+};
+makePoint=function(p,pos){let idx=p-1,st=board[idx],el=document.createElement('div');el.dataset.point=idx;el.className='point '+pos+(selectedIndex===idx?' selected':'');el.onclick=()=>handleClick(idx);el.title='خانه '+FA(p)+' — '+FA(st.count)+' مهره';let tri=document.createElement('div');tri.className='tri '+(p%2?'a':'b');el.appendChild(tri);
+ // Overlap tall stacks instead of turning pieces into bars.
+ let visible=Math.min(st.count,5);for(let k=0;k<visible;k++){let ch=document.createElement('div');ch.className='checker '+st.color;ch.style.maxHeight='19%';if(k===visible-1&&st.count>5){ch.textContent=FA(st.count);ch.style.fontSize='12px';ch.style.fontWeight='bold';}el.appendChild(ch);}return el;};
+maybeAutoRoll=function(){};
+applyTheme=function(){document.getElementById('board').style.background='#dfbd83';};
+resetGame=function(){session++;clearTimeout(botTimer);busy=false;document.getElementById('game').classList.remove('rolling');document.getElementById('gameover-modal').style.display='none';initBoard();myColor='w';turn='w';opp={name:'حریف کامپیوتری',avatar:'🤖',lvl:13};openingDice={w:null,b:null};diceMoves=[];lastRoll=null;selectedIndex=null;validMoves=[];history=[];gameState='OPENING';render();};
+enterGame=function(){document.getElementById('lobby').style.display='none';let tb=document.getElementById('table-bar');tb.style.display='block';tb.textContent=TABLES[curTable].name+' | تمرین با کامپیوتر • سفید: شما';resetGame();updateAudio();};
+rematch=function(){resetGame();};
+function leaveGame(){if(!confirm('به تالار برگردید؟ بازی فعلی ذخیره نمی‌شود.'))return;session++;clearTimeout(botTimer);busy=false;gameState='CONNECTING';document.getElementById('gameover-modal').style.display='none';document.getElementById('lobby').style.display='block';document.getElementById('game').classList.remove('rolling');updateAudio();renderLobby();}
+// No entry fee or coin rewards for local practice.
+const originalLobby=renderLobby;renderLobby=function(){originalLobby();document.getElementById('lv-entry').textContent='شروع بازی با کامپیوتر • رایگان';};
+updateAudio();renderLobby();render();
+
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3ca3086a8107829',t:'MTc4OTY2OTkwNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
